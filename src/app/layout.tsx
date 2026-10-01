@@ -61,7 +61,7 @@ export const metadata: Metadata = {
       "I build minimal, premium web experiences with Next.js, TypeScript and thoughtful design.",
     images: [
       {
-        url: "/og.svg",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "Shubham — Portfolio"
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     title: "Shubham — Full-Stack Developer",
     description:
       "Minimal, premium web experiences built with Next.js and TypeScript.",
-    images: ["/og.svg"]
+    images: ["/opengraph-image"]
   },
 
   robots: {
@@ -90,8 +90,12 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: "/favicon.svg"
-  }
+    icon: "/favicon.svg",
+  },
+
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export const viewport: Viewport = {
@@ -105,6 +109,14 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const personJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Shubham",
+    jobTitle: "Full-Stack Developer",
+    knowsAbout: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js"]
+  };
+
   return (
     <html
       lang="en"
@@ -112,6 +124,10 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="bg-[var(--color-bg)] font-sans text-[var(--color-text)] antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
         <div className="relative min-h-screen bg-[var(--color-bg)]">
           <Navbar />
           <main className="relative">{children}</main>

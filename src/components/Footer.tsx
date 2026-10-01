@@ -22,10 +22,10 @@ export default function Footer() {
               </span>
               <span className="text-[15px] font-semibold tracking-tight text-zinc-100">
                 {siteConfig.name}
-                <span className="text-zinc-500">.dev</span>
+                <span className="text-zinc-400">.dev</span>
               </span>
             </a>
-            <p className="mt-3 max-w-sm text-sm leading-relaxed text-zinc-500">
+            <p className="mt-3 max-w-sm text-sm leading-relaxed text-zinc-400">
               {siteConfig.tagline}
               {siteConfig.location ? ` Based in ${siteConfig.location}, working worldwide.` : ""}
             </p>
@@ -37,7 +37,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="rounded-full px-3.5 py-2 text-sm text-zinc-500 transition-colors hover:bg-white/[0.06] hover:text-white"
+                    className="rounded-full px-3.5 py-2 text-sm text-zinc-400 transition-colors hover:bg-white/[0.06] hover:text-white"
                   >
                     {link.label}
                   </a>
@@ -70,10 +70,10 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-white/[0.06] pt-7 sm:flex-row">
-          <p className="text-[13px] text-zinc-600">
+          <p className="text-[13px] text-zinc-400">
             © {year} {siteConfig.name}. All rights reserved.
           </p>
-          <p className="flex items-center gap-1.5 text-[13px] text-zinc-600">
+          <p className="flex items-center gap-1.5 text-[13px] text-zinc-400">
             Built with <Heart className="h-3.5 w-3.5 fill-zinc-600" /> using Next.js, Tailwind & Framer Motion
           </p>
         </div>

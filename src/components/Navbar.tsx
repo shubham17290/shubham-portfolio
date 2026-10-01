@@ -37,17 +37,13 @@ export default function Navbar() {
         }`}
       >
         <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
-          <a
-            href="#home"
-            className="group flex items-center gap-2.5"
-            aria-label="Home"
-          >
+          <a href="#home" className="group flex items-center gap-2.5">
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-sm font-bold text-black transition-transform group-hover:scale-105">
               S
             </span>
             <span className="text-[15px] font-semibold tracking-tight text-zinc-100">
               {siteConfig.name}
-              <span className="text-zinc-500">.dev</span>
+              <span className="text-zinc-400">.dev</span>
             </span>
           </a>
 
