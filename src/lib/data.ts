@@ -45,12 +45,11 @@ export const links = {
 };
 
 /* ── Stats ────────────────────────────────────────── */
-// NOTE: values below describe this portfolio's stack (not career claims).
-// Replace with your real numbers when ready.
+// TODO: replace "—" with your real numbers.
 export const stats = [
-  { value: "5", label: "Core Technologies" },
-  { value: "3", label: "Focus Areas" },
-  { value: "100%", label: "Responsive & Modern" },
+  { value: "—", label: "Years Experience" },
+  { value: "—", label: "Projects Completed" },
+  { value: "—", label: "Happy Clients" },
 ];
 
 /* ── Skills ───────────────────────────────────────── */
