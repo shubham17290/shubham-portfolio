@@ -8,7 +8,7 @@ import {
 /* ── Site ─────────────────────────────────────────── */
 // TODO: replace email + social URLs below with your real info.
 export const siteConfig = {
-  name: "Shubh Dev",
+  name: "Shubham",
   role: "Full-Stack Developer",
   tagline: "I build minimal, premium web experiences.",
   description:
@@ -181,7 +181,7 @@ export const projects: Project[] = [
 
 /* ── About ────────────────────────────────────────── */
 export const aboutParagraphs = [
-  "I'm Shubh Dev — a full-stack developer working with Next.js, React, TypeScript, Tailwind CSS, and Node.js. I focus on building minimal, premium, modern web experiences that are fast, accessible, and easy to maintain.",
+  "I'm Shubham — a full-stack developer working with Next.js, React, TypeScript, Tailwind CSS, and Node.js. I focus on building minimal, premium, modern web experiences that are fast, accessible, and easy to maintain.",
   "I enjoy turning ideas into polished, responsive interfaces with clean, type-safe code — and I'm always learning and improving my craft.",
 ];
 

@@ -22,15 +22,15 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://example.com"),
 
   title: {
-    default: "Shubh Dev — Full-Stack Developer & Designer",
-    template: "%s | Shubh Dev"
+    default: "Shubham — Full-Stack Developer & Designer",
+    template: "%s | Shubham"
   },
 
   description:
-    "Portfolio of Shubh Dev, a full-stack developer crafting minimal, premium web experiences with Next.js, TypeScript, and modern design.",
+    "Portfolio of Shubham, a full-stack developer crafting minimal, premium web experiences with Next.js, TypeScript, and modern design.",
 
   keywords: [
-    "Shubh Dev",
+    "Shubham",
     "portfolio",
     "full-stack developer",
     "Next.js",
@@ -44,19 +44,19 @@ export const metadata: Metadata = {
 
   authors: [
     {
-      name: "Shubh Dev",
+      name: "Shubham",
       url: "https://example.com"
     }
   ],
 
-  creator: "Shubh Dev",
+  creator: "Shubham",
 
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://example.com",
-    siteName: "Shubh Dev — Portfolio",
-    title: "Shubh Dev — Full-Stack Developer & Designer",
+    siteName: "Shubham — Portfolio",
+    title: "Shubham — Full-Stack Developer & Designer",
     description:
       "I build minimal, premium web experiences with Next.js, TypeScript and thoughtful design.",
     images: [
@@ -64,14 +64,14 @@ export const metadata: Metadata = {
         url: "/og.svg",
         width: 1200,
         height: 630,
-        alt: "Shubh Dev — Portfolio"
+        alt: "Shubham — Portfolio"
       }
     ]
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Shubh Dev — Full-Stack Developer",
+    title: "Shubham — Full-Stack Developer",
     description:
       "Minimal, premium web experiences built with Next.js and TypeScript.",
     images: ["/og.svg"]

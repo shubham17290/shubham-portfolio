@@ -11,7 +11,7 @@ export default function Projects() {
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeading
           eyebrow="Projects"
-          title="Selected work that speaks for itself"
+          title="Featured Projects"
           description="Placeholder projects — swap in your own case studies, repos and live links. Featured cards get extra spotlight."
         />
 
@@ -29,7 +29,7 @@ export default function Projects() {
             >
               {/* Thumbnail placeholder */}
               <div className="relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-zinc-800 via-zinc-900 to-black">
-                <div className="bg-grid absolute inset-0 opacity-60" />
+                <div className="bg-grid absolute inset-0 opacity-60 transition-transform duration-500 group-hover:scale-105" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] backdrop-blur transition-transform group-hover:scale-110">
                     <FolderGit2 className="h-6 w-6 text-zinc-300" />
