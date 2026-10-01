@@ -94,10 +94,14 @@ export async function POST(request: Request) {
   }
 
   try {
-    const result = await streamText({
-      model: google("gemini-2.0-flash"),
+    console.log("KEY EXISTS:", !!process.env.GOOGLE_GENERATIVE_AI_API_KEY);
+    const result = streamText({
+      model: google("gemini-3.8-flash"),
       system: SYSTEM_PROMPT,
       messages,
+      onError({ error }) {
+        console.error("[chat] stream error:", error);
+      },
     });
     return result.toTextStreamResponse();
   } catch (err) {
