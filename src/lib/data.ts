@@ -6,14 +6,16 @@ import {
 } from "lucide-react";
 
 /* ── Site ─────────────────────────────────────────── */
+// TODO: replace email + social URLs below with your real info.
 export const siteConfig = {
-  name: "John Doe",
+  name: "Shubh Dev",
   role: "Full-Stack Developer",
   tagline: "I build minimal, premium web experiences.",
   description:
-    "Full-stack developer based in San Francisco with 5+ years of experience crafting fast, accessible, and delightful products for startups and global brands.",
-  location: "San Francisco, CA",
-  email: "hello@johndoe.dev",
+    "Full-stack developer working with Next.js, React, TypeScript, Tailwind CSS, and Node.js. Focused on minimal, premium, modern web experiences.",
+  // No location provided — left empty on purpose (components hide it when empty).
+  location: "",
+  email: "your-email@example.com",
   availability: "Available for freelance",
   resumeUrl: "#",
 };
@@ -39,15 +41,16 @@ export const links = {
   github: "https://github.com",
   linkedin: "https://linkedin.com",
   twitter: "https://x.com",
-  email: "hello@johndoe.dev",
+  email: "your-email@example.com",
 };
 
 /* ── Stats ────────────────────────────────────────── */
+// NOTE: values below describe this portfolio's stack (not career claims).
+// Replace with your real numbers when ready.
 export const stats = [
-  { value: "5+", label: "Years Experience" },
-  { value: "48+", label: "Projects Shipped" },
-  { value: "20+", label: "Happy Clients" },
-  { value: "12k+", label: "GitHub Stars" },
+  { value: "5", label: "Core Technologies" },
+  { value: "3", label: "Focus Areas" },
+  { value: "100%", label: "Responsive & Modern" },
 ];
 
 /* ── Skills ───────────────────────────────────────── */
@@ -179,29 +182,16 @@ export const projects: Project[] = [
 
 /* ── About ────────────────────────────────────────── */
 export const aboutParagraphs = [
-  "I'm John — a full-stack developer who loves the intersection of engineering and design. I specialize in Next.js, TypeScript, and design systems that scale from MVP to millions of users.",
-  "Previously I led frontend at two YC startups and shipped products used by 500k+ people. Now I help teams build fast, accessible, premium web experiences — from idea to production.",
+  "I'm Shubh Dev — a full-stack developer working with Next.js, React, TypeScript, Tailwind CSS, and Node.js. I focus on building minimal, premium, modern web experiences that are fast, accessible, and easy to maintain.",
+  "I enjoy turning ideas into polished, responsive interfaces with clean, type-safe code — and I'm always learning and improving my craft.",
 ];
 
-export const experience = [
-  {
-    role: "Senior Frontend Engineer",
-    company: "Acme Inc.",
-    period: "2022 — Present",
-    description:
-      "Leading design system and Next.js platform serving 500k users.",
-  },
-  {
-    role: "Full-Stack Developer",
-    company: "Startup XYZ",
-    period: "2020 — 2022",
-    description: "Built MVP to Series A, owned web app, API and infra.",
-  },
-  {
-    role: "UI Engineer",
-    company: "Freelance",
-    period: "2019 — 2020",
-    description:
-      "Shipped 20+ marketing sites and dashboards for global clients.",
-  },
-];
+export type Experience = {
+  role: string;
+  company: string;
+  period: string;
+  description: string;
+};
+
+// TODO: add your real experience here. No placeholder companies included.
+export const experience: Experience[] = [];

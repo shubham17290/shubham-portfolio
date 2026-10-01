@@ -51,15 +51,17 @@ export default function Hero() {
             </p>
           </motion.div>
 
-          <motion.p
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={1}
-            className="mt-7 flex items-center gap-2 font-mono text-[13px] uppercase tracking-[0.22em] text-zinc-500"
-          >
-            <MapPin className="h-4 w-4" /> {siteConfig.location}
-          </motion.p>
+          {siteConfig.location ? (
+            <motion.p
+              variants={fadeUp}
+              initial="hidden"
+              animate="show"
+              custom={1}
+              className="mt-7 flex items-center gap-2 font-mono text-[13px] uppercase tracking-[0.22em] text-zinc-500"
+            >
+              <MapPin className="h-4 w-4" /> {siteConfig.location}
+            </motion.p>
+          ) : null}
 
           <motion.h1
             variants={fadeUp}
@@ -151,7 +153,7 @@ export default function Hero() {
               ))}
             </div>
             <span className="h-px w-12 bg-white/10" />
-            <p className="font-mono text-xs text-zinc-600">hello@johndoe.dev</p>
+            <p className="font-mono text-xs text-zinc-600">{siteConfig.email}</p>
           </motion.div>
         </div>
 

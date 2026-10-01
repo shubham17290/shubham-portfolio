@@ -43,7 +43,7 @@ export default function Navbar() {
             aria-label="Home"
           >
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-sm font-bold text-black transition-transform group-hover:scale-105">
-              J
+              S
             </span>
             <span className="text-[15px] font-semibold tracking-tight text-zinc-100">
               {siteConfig.name}

@@ -76,7 +76,9 @@ export default function Contact() {
                 </button>
 
                 {[
-                  { icon: MapPin, label: "Location", value: siteConfig.location },
+                  ...(siteConfig.location
+                    ? [{ icon: MapPin, label: "Location", value: siteConfig.location }]
+                    : []),
                   { icon: Phone, label: "Response time", value: "Within 24 hours" },
                 ].map(({ icon: Icon, label, value }) => (
                   <div

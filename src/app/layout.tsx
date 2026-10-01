@@ -18,7 +18,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://your-domain.com"),
+  // TODO: replace "https://example.com" with your real domain when ready.
+  metadataBase: new URL("https://example.com"),
 
   title: {
     default: "Shubh Dev — Full-Stack Developer & Designer",
@@ -44,7 +45,7 @@ export const metadata: Metadata = {
   authors: [
     {
       name: "Shubh Dev",
-      url: "https://your-domain.com"
+      url: "https://example.com"
     }
   ],
 
@@ -53,14 +54,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://your-domain.com",
+    url: "https://example.com",
     siteName: "Shubh Dev — Portfolio",
     title: "Shubh Dev — Full-Stack Developer & Designer",
     description:
       "I build minimal, premium web experiences with Next.js, TypeScript and thoughtful design.",
     images: [
       {
-        url: "/og.png",
+        url: "/og.svg",
         width: 1200,
         height: 630,
         alt: "Shubh Dev — Portfolio"
@@ -73,8 +74,7 @@ export const metadata: Metadata = {
     title: "Shubh Dev — Full-Stack Developer",
     description:
       "Minimal, premium web experiences built with Next.js and TypeScript.",
-    creator: "@yourhandle",
-    images: ["/og.png"]
+    images: ["/og.svg"]
   },
 
   robots: {

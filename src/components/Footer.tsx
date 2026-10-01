@@ -18,7 +18,7 @@ export default function Footer() {
           <div>
             <a href="#home" className="flex items-center gap-2.5">
               <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-sm font-bold text-black">
-                J
+                S
               </span>
               <span className="text-[15px] font-semibold tracking-tight text-zinc-100">
                 {siteConfig.name}
@@ -26,7 +26,8 @@ export default function Footer() {
               </span>
             </a>
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-zinc-500">
-              {siteConfig.tagline} Based in {siteConfig.location}, working worldwide.
+              {siteConfig.tagline}
+              {siteConfig.location ? ` Based in ${siteConfig.location}, working worldwide.` : ""}
             </p>
           </div>
 

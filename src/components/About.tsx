@@ -45,7 +45,7 @@ export default function About() {
               <div>
                 <p className="text-sm font-semibold text-white">{siteConfig.name}</p>
                 <p className="text-xs text-zinc-500">
-                  {siteConfig.role} · {siteConfig.location}
+                  {siteConfig.location ? `${siteConfig.role} · ${siteConfig.location}` : siteConfig.role}
                 </p>
               </div>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/10 px-2.5 py-1 text-xs font-medium text-emerald-300">
