@@ -1,14 +1,73 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Mail, MapPin, Copy, Check, Send, Phone } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  Mail,
+  Copy,
+  Check,
+  Send,
+  Github,
+  Linkedin,
+  Twitter,
+  Dribbble,
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
+} from "lucide-react";
 import SectionHeading from "./SectionHeading";
-import { siteConfig } from "@/lib/data";
+import { siteConfig, socials } from "@/lib/data";
+
+const socialIcons = {
+  Github,
+  Linkedin,
+  Twitter,
+  Dribbble,
+} as const;
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+type Errors = Partial<Record<"name" | "email" | "message", string>>;
+type Toast = { type: "success" | "error"; message: string } | null;
+
+function validate(name: string, email: string, message: string): Errors {
+  const errors: Errors = {};
+  if (name.trim().length < 2) errors.name = "Please enter your name.";
+  if (!EMAIL_RE.test(email.trim()))
+    errors.email = "Please enter a valid email address.";
+  if (message.trim().length < 10)
+    errors.message = "Message must be at least 10 characters.";
+  return errors;
+}
+
+const inputClass = (invalid: boolean) =>
+  `w-full rounded-xl border bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-zinc-600 outline-none transition-colors focus:bg-white/[0.05] ${
+    invalid
+      ? "border-red-400/60 focus:border-red-400"
+      : "border-white/10 focus:border-white/30"
+  }`;
 
 export default function Contact() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState<Errors>({});
+  const [sending, setSending] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [sent, setSent] = useState(false);
+  const [toast, setToast] = useState<Toast>(null);
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const showToast = (next: NonNullable<Toast>) => {
+    setToast(next);
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setToast(null), 4000);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (toastTimer.current) clearTimeout(toastTimer.current);
+    };
+  }, []);
 
   const copyEmail = async () => {
     try {
@@ -16,16 +75,49 @@ export default function Contact() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      /* clipboard unavailable */
+      showToast({ type: "error", message: "Could not copy email." });
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Placeholder — wire to Resend / Formspree / API route later
-    setSent(true);
-    setTimeout(() => setSent(false), 4000);
-    (e.target as HTMLFormElement).reset();
+    const nextErrors = validate(name, email, message);
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) return;
+
+    setSending(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message }),
+      });
+      const data = (await res.json().catch(() => null)) as {
+        ok?: boolean;
+        errors?: Errors;
+      } | null;
+
+      if (!res.ok || !data?.ok) {
+        if (data?.errors) setErrors(data.errors);
+        throw new Error("submit-failed");
+      }
+
+      setName("");
+      setEmail("");
+      setMessage("");
+      setErrors({});
+      showToast({
+        type: "success",
+        message: "Message sent! I'll get back to you soon.",
+      });
+    } catch {
+      showToast({
+        type: "error",
+        message: "Something went wrong. Please try again.",
+      });
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -37,11 +129,11 @@ export default function Contact() {
         <SectionHeading
           eyebrow="Contact"
           title="Let's build something great together"
-          description="Placeholder form — connect it to your email service later. I usually reply within 24 hours."
+          description="Fill out the form and I'll get back to you as soon as I can."
         />
 
         <div className="mt-12 grid gap-6 lg:mt-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10">
-          {/* Info */}
+          {/* Left: heading + email + socials */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -52,68 +144,71 @@ export default function Contact() {
             <div className="rounded-2xl border border-white/[0.07] bg-[#0e0e11] p-6 sm:p-7">
               <h3 className="text-lg font-semibold text-white">Get in touch</h3>
               <p className="mt-2 text-sm leading-relaxed text-zinc-400">
-                Currently {siteConfig.availability.toLowerCase()} for freelance,
-                full-time roles and fun collaborations.
+                Currently {siteConfig.availability.toLowerCase()} for
+                freelance, full-time roles and fun collaborations.
               </p>
 
-              <div className="mt-6 space-y-3">
-                <button
-                  onClick={copyEmail}
-                  className="group flex w-full items-center justify-between gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3.5 text-left transition-colors hover:border-white/20"
-                >
-                  <span className="flex items-center gap-3">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-black">
-                      <Mail className="h-5 w-5" />
+              <button
+                onClick={copyEmail}
+                className="group mt-6 flex w-full items-center justify-between gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3.5 text-left transition-colors hover:border-white/20"
+              >
+                <span className="flex items-center gap-3">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-black">
+                    <Mail className="h-5 w-5" />
+                  </span>
+                  <span>
+                    <span className="block text-[11px] uppercase tracking-wider text-zinc-500">
+                      Email
                     </span>
-                    <span>
-                      <span className="block text-[11px] uppercase tracking-wider text-zinc-500">Email</span>
-                      <span className="block text-sm font-medium text-white">{siteConfig.email}</span>
+                    <span className="block text-sm font-medium text-white">
+                      {siteConfig.email}
                     </span>
                   </span>
-                  <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-zinc-400 transition-colors group-hover:text-white">
-                    {copied ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
-                  </span>
-                </button>
-
-                {[
-                  ...(siteConfig.location
-                    ? [{ icon: MapPin, label: "Location", value: siteConfig.location }]
-                    : []),
-                  { icon: Phone, label: "Response time", value: "Within 24 hours" },
-                ].map(({ icon: Icon, label, value }) => (
-                  <div
-                    key={label}
-                    className="flex items-center gap-3 rounded-xl border border-white/[0.06] px-4 py-3.5"
-                  >
-                    <span className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-zinc-300">
-                      <Icon className="h-5 w-5" />
-                    </span>
-                    <span>
-                      <span className="block text-[11px] uppercase tracking-wider text-zinc-500">{label}</span>
-                      <span className="block text-sm font-medium text-zinc-200">{value}</span>
-                    </span>
-                  </div>
-                ))}
-              </div>
+                </span>
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-zinc-400 transition-colors group-hover:text-white">
+                  {copied ? (
+                    <Check className="h-4 w-4 text-emerald-400" />
+                  ) : (
+                    <Copy className="h-4 w-4" />
+                  )}
+                </span>
+              </button>
 
               {copied && (
                 <p className="mt-3 text-center text-xs font-medium text-emerald-400">
                   Email copied to clipboard!
                 </p>
               )}
-            </div>
 
-            <div className="rounded-2xl border border-emerald-400/20 bg-emerald-400/[0.06] p-6">
-              <p className="text-sm leading-relaxed text-emerald-100/90">
-                <span className="font-semibold text-emerald-300">Prefer a quick call? </span>
-                Mention your timezone and I&apos;ll send a Calendly link. No recruiters spam, promise.
-              </p>
+              <div className="mt-6 border-t border-white/[0.06] pt-6">
+                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-600">
+                  Follow me
+                </p>
+                <div className="mt-3 flex items-center gap-2">
+                  {socials.map((s) => {
+                    const Icon = socialIcons[s.icon];
+                    return (
+                      <a
+                        key={s.label}
+                        href={s.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={s.label}
+                        className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-zinc-400 transition-all hover:border-white/20 hover:text-white"
+                      >
+                        <Icon className="h-[18px] w-[18px]" />
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </motion.div>
 
-          {/* Form */}
+          {/* Right: form */}
           <motion.form
             onSubmit={handleSubmit}
+            noValidate
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -122,64 +217,111 @@ export default function Contact() {
           >
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="block">
-                <span className="mb-1.5 block text-[13px] font-medium text-zinc-300">Name</span>
+                <span className="mb-1.5 block text-[13px] font-medium text-zinc-300">
+                  Name
+                </span>
                 <input
-                  required
                   name="name"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    if (errors.name) setErrors((p) => ({ ...p, name: undefined }));
+                  }}
                   placeholder="Jane Smith"
-                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-zinc-600 outline-none transition-colors focus:border-white/30 focus:bg-white/[0.05]"
+                  aria-invalid={!!errors.name}
+                  className={inputClass(!!errors.name)}
                 />
+                {errors.name && (
+                  <span className="mt-1.5 block text-xs text-red-400">{errors.name}</span>
+                )}
               </label>
               <label className="block">
-                <span className="mb-1.5 block text-[13px] font-medium text-zinc-300">Email</span>
+                <span className="mb-1.5 block text-[13px] font-medium text-zinc-300">
+                  Email
+                </span>
                 <input
-                  required
                   type="email"
                   name="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (errors.email) setErrors((p) => ({ ...p, email: undefined }));
+                  }}
                   placeholder="jane@company.com"
-                  className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-zinc-600 outline-none transition-colors focus:border-white/30 focus:bg-white/[0.05]"
+                  aria-invalid={!!errors.email}
+                  className={inputClass(!!errors.email)}
                 />
+                {errors.email && (
+                  <span className="mt-1.5 block text-xs text-red-400">{errors.email}</span>
+                )}
               </label>
             </div>
+
             <label className="mt-4 block">
-              <span className="mb-1.5 block text-[13px] font-medium text-zinc-300">Subject</span>
-              <input
-                name="subject"
-                placeholder="Project inquiry — landing page redesign"
-                className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-zinc-600 outline-none transition-colors focus:border-white/30 focus:bg-white/[0.05]"
-              />
-            </label>
-            <label className="mt-4 block">
-              <span className="mb-1.5 block text-[13px] font-medium text-zinc-300">Message</span>
+              <span className="mb-1.5 block text-[13px] font-medium text-zinc-300">
+                Message
+              </span>
               <textarea
-                required
                 name="message"
                 rows={5}
+                value={message}
+                onChange={(e) => {
+                  setMessage(e.target.value);
+                  if (errors.message) setErrors((p) => ({ ...p, message: undefined }));
+                }}
                 placeholder="Tell me about your project, timeline and budget..."
-                className="w-full resize-none rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-zinc-600 outline-none transition-colors focus:border-white/30 focus:bg-white/[0.05]"
+                aria-invalid={!!errors.message}
+                className={`${inputClass(!!errors.message)} resize-none`}
               />
+              {errors.message && (
+                <span className="mt-1.5 block text-xs text-red-400">{errors.message}</span>
+              )}
             </label>
 
             <button
               type="submit"
-              className="group mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-[15px] font-medium text-black transition-all hover:bg-zinc-200 sm:w-auto sm:px-8"
+              disabled={sending}
+              className="group mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-[15px] font-medium text-black transition-all hover:bg-zinc-200 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-8"
             >
-              {sent ? (
+              {sending ? (
                 <>
-                  <Check className="h-4 w-4" /> Message Sent!
+                  <Loader2 className="h-4 w-4 animate-spin" /> Sending...
                 </>
               ) : (
                 <>
-                  Send Message <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  Send Message{" "}
+                  <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </>
               )}
             </button>
-            <p className="mt-4 font-mono text-[11px] leading-relaxed text-zinc-600">
-              {"// TODO: wire to /api/contact or Resend. Currently front-end only."}
-            </p>
           </motion.form>
         </div>
       </div>
+
+      {/* Toast */}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            initial={{ opacity: 0, y: 24, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 12, scale: 0.98 }}
+            transition={{ duration: 0.25 }}
+            role="status"
+            className={`fixed bottom-6 left-1/2 z-[60] flex -translate-x-1/2 items-center gap-2.5 rounded-full border px-5 py-3 text-sm font-medium shadow-2xl backdrop-blur-xl ${
+              toast.type === "success"
+                ? "border-emerald-400/30 bg-emerald-950/90 text-emerald-100"
+                : "border-red-400/30 bg-red-950/90 text-red-100"
+            }`}
+          >
+            {toast.type === "success" ? (
+              <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+            ) : (
+              <AlertCircle className="h-4 w-4 text-red-400" />
+            )}
+            {toast.message}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

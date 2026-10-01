@@ -17,7 +17,7 @@ export const siteConfig = {
   location: "",
   email: "your-email@example.com",
   availability: "Available for freelance",
-  resumeUrl: "#",
+  resumeUrl: "/resume.pdf",
 };
 
 /* ── Nav ──────────────────────────────────────────── */

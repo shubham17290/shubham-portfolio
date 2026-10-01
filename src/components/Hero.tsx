@@ -9,6 +9,7 @@ import {
   Twitter,
   MapPin,
   Sparkles,
+  Download,
 } from "lucide-react";
 import { siteConfig } from "@/lib/data";
 
@@ -124,6 +125,14 @@ export default function Hero() {
             >
               <Sparkles className="h-4 w-4 text-zinc-400" />
               Get in Touch
+            </a>
+            <a
+              href="/resume.pdf"
+              download
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 bg-transparent px-7 py-3.5 text-[15px] font-medium text-zinc-300 transition-colors hover:border-white/25 hover:text-white"
+            >
+              <Download className="h-4 w-4" />
+              Resume
             </a>
           </motion.div>
 
