@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "nodejs";
-export const alt = "Shubham — Portfolio";
+export const alt = "Shubham Maurya — Portfolio";
 export const size = {
   width: 1200,
   height: 630,
@@ -32,7 +32,7 @@ export default async function Image() {
             letterSpacing: "-0.03em",
           }}
         >
-          Shubham
+          Shubham Maurya
         </div>
         <div style={{ display: "flex", fontSize: 32, color: "#a1a1aa" }}>
           Full-Stack Developer — Minimal, premium web experiences

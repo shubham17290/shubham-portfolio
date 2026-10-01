@@ -9,11 +9,16 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "framer-motion": "^12.23.24",
+    "@ai-sdk/google": "^4.0.87",
+    "ai": "^7.0.126",
+    "cmdk": "^1.1.1",
+    "framer-motion": "^12.43.0",
     "lucide-react": "^0.545.0",
     "next": "^16.0.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "react-github-calendar": "^5.0.9",
+    "sonner": "^2.0.8"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",

@@ -24,15 +24,15 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://example.com"),
 
   title: {
-    default: "Shubham — Full-Stack Developer & Designer",
-    template: "%s | Shubham"
+    default: "Shubham Maurya — Full-Stack Developer & Designer",
+    template: "%s | Shubham Maurya"
   },
 
   description:
-    "Portfolio of Shubham, a full-stack developer crafting minimal, premium web experiences with Next.js, TypeScript, and modern design.",
+    "Portfolio of Shubham Maurya, a full-stack developer crafting minimal, premium web experiences with Next.js, TypeScript, and modern design.",
 
   keywords: [
-    "Shubham",
+    "Shubham Maurya",
     "portfolio",
     "full-stack developer",
     "Next.js",
@@ -46,19 +46,19 @@ export const metadata: Metadata = {
 
   authors: [
     {
-      name: "Shubham",
+      name: "Shubham Maurya",
       url: "https://example.com"
     }
   ],
 
-  creator: "Shubham",
+  creator: "Shubham Maurya",
 
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://example.com",
-    siteName: "Shubham — Portfolio",
-    title: "Shubham — Full-Stack Developer & Designer",
+    siteName: "Shubham Maurya — Portfolio",
+    title: "Shubham Maurya — Full-Stack Developer & Designer",
     description:
       "I build minimal, premium web experiences with Next.js, TypeScript and thoughtful design.",
     images: [
@@ -66,14 +66,14 @@ export const metadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Shubham — Portfolio"
+        alt: "Shubham Maurya — Portfolio"
       }
     ]
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Shubham — Full-Stack Developer",
+    title: "Shubham Maurya — Full-Stack Developer",
     description:
       "Minimal, premium web experiences built with Next.js and TypeScript.",
     images: ["/opengraph-image"]
@@ -114,7 +114,7 @@ export default function RootLayout({
   const personJsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: "Shubham",
+    name: "Shubham Maurya",
     jobTitle: "Full-Stack Developer",
     knowsAbout: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js"]
   };
