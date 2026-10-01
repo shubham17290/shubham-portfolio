@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
+import BackgroundBlobs from "@/components/BackgroundBlobs";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -131,6 +132,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         <div className="relative min-h-screen bg-[var(--color-bg)]">
+          <BackgroundBlobs />
           <Navbar />
           <main className="relative">{children}</main>
           <Footer />
