@@ -7,11 +7,13 @@ export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
 
-    console.log("[CHAT API] called. Messages:", messages.length);
-    console.log("[CHAT API] Key exists:", !!process.env.GOOGLE_GENERATIVE_AI_API_KEY);
+    console.log(
+      "✅ API HIT. Key exists:",
+      !!process.env.GOOGLE_GENERATIVE_AI_API_KEY
+    );
 
     const result = streamText({
-      model: google("gemini-3.8-flash"),
+      model: google("gemini-2.0-flash"),
       system: `You are the AI assistant on Shubham Maurya's portfolio website. Answer questions about him in a friendly, professional tone. Keep responses short (2-3 sentences max).
 
 About Shubham:
@@ -27,16 +29,16 @@ About Shubham:
 If asked something unrelated, politely redirect to questions about Shubham.`,
       messages,
       onError({ error }) {
-        console.error("[CHAT API] STREAM ERROR:", error);
-      },
+        console.error("❌ STREAM ERROR:", error);
+      }
     });
 
-    return result.toTextStreamResponse();
+    return result.toDataStreamResponse();
   } catch (error) {
-    console.error("[CHAT API] CATCH ERROR:", error);
-    return new Response(
-      JSON.stringify({ error: "Something went wrong." }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
-    );
+    console.error("❌ API ERROR:", error);
+    return new Response(JSON.stringify({ error: "Something went wrong." }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" }
+    });
   }
 }
