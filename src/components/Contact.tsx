@@ -200,7 +200,7 @@ export default function Contact() {
                   type="button"
                   onClick={copyEmail}
                   aria-label="Copy email address"
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 text-zinc-400 transition-colors hover:text-white"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 text-zinc-400 transition-colors hover:text-white active:scale-95"
                 >
                   {copied ? (
                     <Check className="h-4 w-4 text-emerald-400" />
@@ -315,7 +315,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={sending}
-                className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-[15px] font-medium text-black transition-all hover:bg-zinc-200 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-8"
+                className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-[15px] font-medium text-black transition-all hover:bg-zinc-200 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-8"
               >
                 {sending ? (
                   <>

@@ -7,6 +7,9 @@ import BackgroundBlobs from "@/components/BackgroundBlobs";
 import ScrollProgress from "@/components/ScrollProgress";
 import CommandPalette from "@/components/CommandPalette";
 import ChatWidget from "@/components/ChatWidget";
+import LoadingScreen from "@/components/LoadingScreen";
+import EasterEggs from "@/components/EasterEggs";
+import BackToTop from "@/components/BackToTop";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -133,12 +136,15 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         <div className="relative min-h-screen bg-[var(--color-bg)]">
+          <LoadingScreen />
           <ScrollProgress />
           <BackgroundBlobs />
           <CommandPalette />
+          <EasterEggs />
           <Navbar />
           <main className="relative">{children}</main>
           <Footer />
+          <BackToTop />
           <ChatWidget />
         </div>
       </body>

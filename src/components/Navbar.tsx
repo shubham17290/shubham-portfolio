@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight, Search } from "lucide-react";
 import { navLinks, siteConfig } from "@/lib/data";
@@ -8,6 +8,26 @@ import { navLinks, siteConfig } from "@/lib/data";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [logoMsg, setLogoMsg] = useState(false);
+  const logoClicks = useRef<number[]>([]);
+  const logoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleLogoClick = () => {
+    const now = Date.now();
+    logoClicks.current = [...logoClicks.current.filter((t) => now - t < 1500), now];
+    if (logoClicks.current.length >= 5) {
+      logoClicks.current = [];
+      setLogoMsg(true);
+      if (logoTimer.current) clearTimeout(logoTimer.current);
+      logoTimer.current = setTimeout(() => setLogoMsg(false), 2500);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (logoTimer.current) clearTimeout(logoTimer.current);
+    };
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -37,7 +57,7 @@ export default function Navbar() {
         }`}
       >
         <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
-          <a href="#home" className="group flex items-center gap-2.5">
+          <a href="#home" onClick={handleLogoClick} className="group relative flex items-center gap-2.5">
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-sm font-bold text-black transition-transform group-hover:scale-105">
               S
             </span>
@@ -45,6 +65,19 @@ export default function Navbar() {
               {siteConfig.name}
               <span className="text-zinc-400">.dev</span>
             </span>
+            <AnimatePresence>
+              {logoMsg && (
+                <motion.span
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute left-0 top-full mt-2 whitespace-nowrap rounded-full border border-white/10 bg-[#0e0e11] px-3.5 py-1.5 text-xs text-zinc-300 shadow-xl"
+                >
+                  You really like clicking, huh? 😄
+                </motion.span>
+              )}
+            </AnimatePresence>
           </a>
 
           {/* Desktop */}
@@ -70,7 +103,7 @@ export default function Navbar() {
               type="button"
               onClick={() => window.dispatchEvent(new CustomEvent("open-command-palette"))}
               aria-label="Open command palette"
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-2 text-sm text-zinc-400 transition-colors hover:border-white/20 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-2 text-sm text-zinc-400 transition-colors hover:border-white/20 hover:text-white active:scale-95"
             >
               <Search className="h-4 w-4" />
               <kbd className="rounded-md border border-white/10 bg-white/[0.04] px-1.5 py-0.5 font-mono text-[11px] text-zinc-500">
@@ -79,7 +112,7 @@ export default function Navbar() {
             </button>
             <a
               href="#contact"
-              className="group hidden items-center gap-1.5 rounded-full bg-white px-5 py-2.5 text-sm font-medium text-black transition-all hover:bg-zinc-200 md:inline-flex"
+              className="group hidden items-center gap-1.5 rounded-full bg-white px-5 py-2.5 text-sm font-medium text-black transition-all hover:bg-zinc-200 active:scale-95 md:inline-flex"
             >
               Let&apos;s Talk
               <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -88,7 +121,7 @@ export default function Navbar() {
             {/* Mobile toggle */}
             <button
               onClick={() => setOpen(!open)}
-              className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-zinc-200 md:hidden"
+              className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-zinc-200 active:scale-95 md:hidden"
               aria-label="Toggle menu"
             >
               {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}

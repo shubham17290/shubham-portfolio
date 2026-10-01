@@ -56,7 +56,7 @@ export default function Skills() {
                 variants={item}
                 whileHover={{ y: -8 }}
                 transition={{ type: "spring", stiffness: 300, damping: 22 }}
-                className="group rounded-2xl border border-white/[0.07] bg-[#0e0e11] p-6 transition-shadow duration-300 hover:border-[var(--accent)]/40 hover:shadow-[0_0_40px_-12px_var(--accent)]"
+                className="group rounded-2xl border border-white/[0.07] bg-[#0e0e11] p-6 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.7)] transition-shadow duration-300 hover:border-[var(--accent)]/40 hover:shadow-[0_0_40px_-12px_var(--accent)]"
               >
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.05] text-zinc-200 transition-colors group-hover:border-transparent group-hover:bg-[var(--accent)] group-hover:text-black">
                   <Icon className="h-5 w-5" />

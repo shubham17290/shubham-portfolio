@@ -260,7 +260,7 @@ export default function Hero() {
             <MagneticButton>
               <a
                 href="#projects"
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-[15px] font-medium text-black transition-all hover:bg-zinc-200 hover:shadow-[0_0_40px_-8px_rgba(255,255,255,0.4)]"
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-[15px] font-medium text-black transition-all hover:bg-zinc-200 hover:shadow-[0_0_40px_-8px_rgba(255,255,255,0.4)] active:scale-95"
               >
                 View My Work
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -268,7 +268,7 @@ export default function Hero() {
             </MagneticButton>
             <a
               href="#contact"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-7 py-3.5 text-[15px] font-medium text-zinc-100 backdrop-blur transition-colors hover:bg-white/[0.08]"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-7 py-3.5 text-[15px] font-medium text-zinc-100 backdrop-blur transition-colors hover:bg-white/[0.08] active:scale-95"
             >
               <Sparkles className="h-4 w-4 text-zinc-400" />
               Get in Touch
@@ -277,7 +277,7 @@ export default function Hero() {
               <a
                 href="/resume.pdf"
                 download
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 bg-transparent px-7 py-3.5 text-[15px] font-medium text-zinc-300 transition-colors hover:border-white/25 hover:text-white"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 bg-transparent px-7 py-3.5 text-[15px] font-medium text-zinc-300 transition-colors hover:border-white/25 hover:text-white active:scale-95"
               >
                 <Download className="h-4 w-4" />
                 Resume

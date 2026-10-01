@@ -39,6 +39,13 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+/* Phase 6 press feedback for every button without touching components */
+button:active,
+a[class*="rounded-full"]:active {
+  scale: 0.95;
 }
 
 /* Global body styles */

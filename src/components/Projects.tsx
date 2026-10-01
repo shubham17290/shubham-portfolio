@@ -87,7 +87,7 @@ function ProjectCard({
         rotateY: springRY,
         transformPerspective: 1000,
       }}
-      whileHover={{ y: -6 }}
+      whileHover={{ y: -6, scale: 1.02 }}
       transition={{ type: "spring", stiffness: 300, damping: 22 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -98,7 +98,7 @@ function ProjectCard({
       tabIndex={0}
       role="button"
       aria-label={`Open ${project.title} details`}
-      className="group flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-white/[0.07] bg-[#0e0e11] transition-colors hover:border-white/[0.15] hover:shadow-[0_20px_60px_-20px_rgba(0,0,0,0.8)]"
+      className="group flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-white/[0.07] bg-[#0e0e11] shadow-[0_10px_40px_-15px_rgba(0,0,0,0.7)] transition-all hover:border-white/[0.15] hover:shadow-[0_20px_60px_-20px_rgba(0,0,0,0.8)] active:scale-95"
     >
       <div ref={ref as React.RefObject<HTMLDivElement>} className="contents">
         {/* Thumbnail placeholder */}
@@ -179,7 +179,7 @@ function ProjectCard({
                 Live Demo <ArrowUpRight className="h-4 w-4" />
               </a>
             ) : (
-              <span className="inline-flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-full bg-white px-4 py-2.5 text-sm font-medium text-black transition-colors hover:bg-zinc-200">
+              <span className="inline-flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-full bg-white px-4 py-2.5 text-sm font-medium text-black transition-colors hover:bg-zinc-200 active:scale-95">
                 View Details <ArrowUpRight className="h-4 w-4" />
               </span>
             )}
@@ -254,7 +254,7 @@ export default function Projects() {
             href="https://github.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 rounded-full border border-white/10 px-6 py-3 text-sm font-medium text-zinc-300 transition-colors hover:border-white/25 hover:text-white"
+            className="group inline-flex items-center gap-2 rounded-full border border-white/10 px-6 py-3 text-sm font-medium text-zinc-300 transition-colors hover:border-white/25 hover:text-white active:scale-95"
           >
             <Github className="h-4 w-4" />
             See more on GitHub
@@ -288,7 +288,7 @@ export default function Projects() {
               <button
                 onClick={() => setSelected(null)}
                 aria-label="Close project details"
-                className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-zinc-400 transition-colors hover:text-white"
+                className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-zinc-400 transition-colors hover:text-white active:scale-95"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -319,7 +319,7 @@ export default function Projects() {
                   href={selected.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm font-medium text-zinc-200 transition-colors hover:bg-white/[0.08] hover:text-white"
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm font-medium text-zinc-200 transition-colors hover:bg-white/[0.08] hover:text-white active:scale-95"
                 >
                   <Github className="h-4 w-4" /> Code
                 </a>
@@ -328,7 +328,7 @@ export default function Projects() {
                     href={selected.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-white px-4 py-2.5 text-sm font-medium text-black transition-colors hover:bg-zinc-200"
+                    className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-white px-4 py-2.5 text-sm font-medium text-black transition-colors hover:bg-zinc-200 active:scale-95"
                   >
                     Live Demo <ArrowUpRight className="h-4 w-4" />
                   </a>

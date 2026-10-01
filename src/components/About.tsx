@@ -132,7 +132,7 @@ export default function About() {
                 <motion.div
                   key={s.label}
                   variants={item}
-                  className="rounded-xl border border-white/[0.07] bg-white/[0.02] px-3 py-5 text-center transition-colors hover:border-white/[0.14]"
+                  className="rounded-xl border border-white/[0.07] bg-white/[0.02] px-3 py-5 text-center shadow-[0_10px_40px_-15px_rgba(0,0,0,0.7)] transition-colors hover:border-white/[0.14]"
                 >
                   <StatValue value={s.value} />
                   <p className="mt-1 text-[11px] uppercase tracking-wider text-zinc-500">
@@ -145,7 +145,7 @@ export default function About() {
             <a
               href={siteConfig.resumeUrl}
               download
-              className="mt-7 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition-colors hover:bg-zinc-200"
+              className="mt-7 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black shadow-[0_10px_40px_-15px_rgba(0,0,0,0.7)] transition-colors hover:bg-zinc-200 active:scale-95"
             >
               <Download className="h-4 w-4" /> Download CV
             </a>
