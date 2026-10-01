@@ -88,20 +88,6 @@ h3,
   background: #3f3f46;
 }
 
-/* Custom cursor — hide the native cursor on desktop fine pointers only.
-   The React cursor renders nothing on touch / reduced-motion devices. */
-@media (hover: hover) and (pointer: fine) {
-  * {
-    cursor: none !important;
-  }
-}
-
-@media (hover: none) {
-  .custom-cursor {
-    display: none !important;
-  }
-}
-
 /* Gradient text */
 
 .text-gradient {
