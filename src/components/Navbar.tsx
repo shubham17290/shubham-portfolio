@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight } from "lucide-react";
-import { navLinks, siteConfig } from "@/data/portfolio";
+import { navLinks, siteConfig } from "@/lib/data";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -30,9 +30,9 @@ export default function Navbar() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        className={`sticky top-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "border-b border-white/[0.06] bg-[#09090b]/80 backdrop-blur-xl"
+            ? "border-b border-white/[0.06] bg-[var(--bg)]/80 backdrop-blur-xl"
             : "border-b border-transparent bg-transparent"
         }`}
       >

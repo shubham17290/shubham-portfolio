@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Copy, Check, Send, Phone } from "lucide-react";
 import SectionHeading from "./SectionHeading";
-import { siteConfig } from "@/data/portfolio";
+import { siteConfig } from "@/lib/data";
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);

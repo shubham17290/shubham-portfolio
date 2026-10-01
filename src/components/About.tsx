@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Download, Briefcase, GraduationCap } from "lucide-react";
 import SectionHeading from "./SectionHeading";
-import { aboutParagraphs, experience, stats, siteConfig } from "@/data/portfolio";
+import { aboutParagraphs, experience, stats, siteConfig } from "@/lib/data";
 
 export default function About() {
   return (

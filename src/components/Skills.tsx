@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import SectionHeading from "./SectionHeading";
-import { skillCategories } from "@/data/portfolio";
+import { skillCategories } from "@/lib/data";
 
 export default function Skills() {
   return (

@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Github, ArrowUpRight, Star, FolderGit2 } from "lucide-react";
 import SectionHeading from "./SectionHeading";
-import { projects } from "@/data/portfolio";
+import { projects } from "@/lib/data";
 
 export default function Projects() {
   return (

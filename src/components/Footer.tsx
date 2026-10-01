@@ -1,5 +1,5 @@
 import { Github, Linkedin, Twitter, Dribbble, ArrowUp, Heart } from "lucide-react";
-import { navLinks, siteConfig } from "@/data/portfolio";
+import { navLinks, siteConfig } from "@/lib/data";
 
 const socialIcons = [
   { label: "GitHub", href: "https://github.com", Icon: Github },

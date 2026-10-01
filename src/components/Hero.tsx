@@ -10,7 +10,7 @@ import {
   MapPin,
   Sparkles,
 } from "lucide-react";
-import { siteConfig } from "@/data/portfolio";
+import { siteConfig } from "@/lib/data";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
