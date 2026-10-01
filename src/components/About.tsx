@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, type Variants, useInView, animate } from "framer-motion";
-import { User, Download } from "lucide-react";
+import Image from "next/image";
+import { Download } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import { aboutParagraphs, stats, siteConfig } from "@/lib/data";
 
@@ -79,14 +80,15 @@ export default function About() {
             variants={item}
             className="relative mx-auto w-full max-w-sm lg:mx-0"
           >
-            <div className="bg-grid relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02]">
-              {/* Replace with next/image later */}
-              <div className="flex flex-col items-center gap-3 text-zinc-600">
-                <span className="flex h-20 w-20 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04]">
-                  <User className="h-10 w-10" />
-                </span>
-                <p className="font-mono text-xs">profile.jpg — 800×800</p>
-              </div>
+            <div className="relative aspect-square overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02]">
+              <Image
+                src="/profile.jpg"
+                alt={`${siteConfig.name} — profile photo`}
+                fill
+                sizes="(max-width: 1024px) 100vw, 400px"
+                className="object-cover"
+                priority
+              />
               {/* accent corner */}
               <div
                 aria-hidden
