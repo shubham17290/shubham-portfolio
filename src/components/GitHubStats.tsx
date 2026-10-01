@@ -75,10 +75,13 @@ function computeStreakFromEvents(events: Array<{ type: string; created_at: strin
 }
 
 export default function GitHubStats() {
+  const [mounted, setMounted] = useState(false);
   const [repos, setRepos] = useState(0);
   const [stars, setStars] = useState(0);
   const [streak, setStreak] = useState(0);
   const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     let cancelled = false;
@@ -120,6 +123,8 @@ export default function GitHubStats() {
       cancelled = true;
     };
   }, []);
+
+  if (!mounted) return null;
 
   const cards = [
     { label: "Total Repos", value: repos, Icon: BookMarked },

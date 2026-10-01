@@ -13,7 +13,7 @@ export async function POST(req: Request) {
     );
 
     const result = streamText({
-      model: google("gemini-2.0-flash"),
+      model: google("gemini-3.8-flash"),
       system: `You are the AI assistant on Shubham Maurya's portfolio website. Answer questions about him in a friendly, professional tone. Keep responses short (2-3 sentences max).
 
 About Shubham:
@@ -33,7 +33,7 @@ If asked something unrelated, politely redirect to questions about Shubham.`,
       }
     });
 
-    return result.toDataStreamResponse();
+    return result.toTextStreamResponse();
   } catch (error) {
     console.error("❌ API ERROR:", error);
     return new Response(JSON.stringify({ error: "Something went wrong." }), {
