@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
@@ -13,6 +14,44 @@ import {
 } from "lucide-react";
 import { siteConfig } from "@/lib/data";
 
+const ROLES = [
+  "Full-Stack Developer",
+  "AI Enthusiast",
+  "React Developer",
+  "Problem Solver",
+];
+
+function useTypewriter(words: string[]) {
+  const [text, setText] = useState("");
+  const [wordIndex, setWordIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentWord = words[wordIndex % words.length];
+    let timeout: ReturnType<typeof setTimeout>;
+
+    if (!isDeleting && charIndex === currentWord.length) {
+      // Pause for 2 seconds when word is complete
+      timeout = setTimeout(() => setIsDeleting(true), 2000);
+    } else if (isDeleting && charIndex === 0) {
+      setIsDeleting(false);
+      setWordIndex((prev) => (prev + 1) % words.length);
+    } else {
+      const speed = isDeleting ? 40 : 80;
+      timeout = setTimeout(() => {
+        const nextChar = isDeleting ? charIndex - 1 : charIndex + 1;
+        setCharIndex(nextChar);
+        setText(currentWord.slice(0, nextChar));
+      }, speed);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [charIndex, isDeleting, wordIndex, words]);
+
+  return text;
+}
+
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
   show: (i: number) => ({
@@ -23,6 +62,8 @@ const fadeUp = {
 };
 
 export default function Hero() {
+  const typedRole = useTypewriter(ROLES);
+
   return (
     <section
       id="home"
@@ -101,8 +142,15 @@ export default function Hero() {
             className="mt-7 max-w-xl text-base leading-relaxed text-zinc-400 sm:text-lg"
           >
             I&apos;m <span className="font-medium text-zinc-100">{siteConfig.name}</span> —{" "}
-            {siteConfig.role.toLowerCase()} focused on Next.js, TypeScript and
-            thoughtful design. I help startups ship fast without compromising on quality.
+            <span className="font-medium text-zinc-100">{typedRole}</span>
+            <span
+              aria-hidden
+              className="ml-0.5 inline-block animate-pulse font-medium text-emerald-400"
+            >
+              |
+            </span>{" "}
+            focused on Next.js, TypeScript and thoughtful design. I help
+            startups ship fast without compromising on quality.
           </motion.p>
 
           <motion.div

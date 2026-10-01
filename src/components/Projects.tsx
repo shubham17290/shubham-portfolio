@@ -1,28 +1,55 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { Github, ArrowUpRight, Star, FolderGit2 } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import { projects } from "@/lib/data";
 
+const container: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { staggerChildren: 0.12, delayChildren: 0.1 },
+  },
+};
+
+const item: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
 export default function Projects() {
   return (
     <section id="projects" className="relative scroll-mt-20 py-20 sm:py-28">
-      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="mx-auto max-w-6xl px-5 sm:px-8"
+      >
         <SectionHeading
           eyebrow="Projects"
           title="Featured Projects"
           description="Placeholder projects — swap in your own case studies, repos and live links. Featured cards get extra spotlight."
         />
 
-        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:mt-16 lg:grid-cols-3">
-          {projects.map((project, i) => (
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="mt-12 grid gap-5 md:grid-cols-2 lg:mt-16 lg:grid-cols-3"
+        >
+          {projects.map((project) => (
             <motion.article
               key={project.title}
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.55, delay: (i % 3) * 0.08 }}
+              variants={item}
               className={`group flex flex-col overflow-hidden rounded-2xl border border-white/[0.07] bg-[#0e0e11] transition-all hover:-translate-y-1 hover:border-white/[0.15] hover:shadow-[0_20px_60px_-20px_rgba(0,0,0,0.8)] ${
                 project.featured ? "md:col-span-1 lg:row-span-1" : ""
               }`}
@@ -87,12 +114,13 @@ export default function Projects() {
               </div>
             </motion.article>
           ))}
-        </div>
+        </motion.div>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5 }}
           className="mt-10 text-center"
         >
           <a
@@ -106,7 +134,7 @@ export default function Projects() {
             <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

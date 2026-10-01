@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { User, Download } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import { aboutParagraphs, stats, siteConfig } from "@/lib/data";
@@ -8,23 +8,50 @@ import { aboutParagraphs, stats, siteConfig } from "@/lib/data";
 // 3 stat cards as per spec: years, projects, clients
 const statCards = stats.slice(0, 3);
 
+const container: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { staggerChildren: 0.12, duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const item: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
 export default function About() {
   return (
     <section id="about" className="relative scroll-mt-20 py-20 sm:py-28">
-      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="mx-auto max-w-6xl px-5 sm:px-8"
+      >
         <SectionHeading
           eyebrow="About"
           title="A little about me"
           description="Developer with a designer eye — I care about speed, clarity, and the details."
         />
 
-        <div className="mt-12 grid items-start gap-8 lg:mt-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-12">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="mt-12 grid items-start gap-8 lg:mt-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-12"
+        >
           {/* Left: profile image placeholder */}
           <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            variants={item}
             className="relative mx-auto w-full max-w-sm lg:mx-0"
           >
             <div className="bg-grid relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02]">
@@ -56,12 +83,7 @@ export default function About() {
           </motion.div>
 
           {/* Right: about text */}
-          <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          >
+          <motion.div variants={item}>
             <h3 className="text-xl font-semibold tracking-tight text-white sm:text-2xl">
               I build minimal, premium web experiences.
             </h3>
@@ -71,20 +93,27 @@ export default function About() {
               ))}
             </div>
 
-            {/* Stat cards */}
-            <div className="mt-8 grid grid-cols-3 gap-3 sm:gap-4">
+            {/* Stat cards with stagger */}
+            <motion.div
+              variants={container}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
+              className="mt-8 grid grid-cols-3 gap-3 sm:gap-4"
+            >
               {statCards.map((s) => (
-                <div
+                <motion.div
                   key={s.label}
+                  variants={item}
                   className="rounded-xl border border-white/[0.07] bg-white/[0.02] px-3 py-5 text-center transition-colors hover:border-white/[0.14]"
                 >
                   <p className="text-xl font-semibold text-white sm:text-2xl">{s.value}</p>
                   <p className="mt-1 text-[11px] uppercase tracking-wider text-zinc-500">
                     {s.label}
                   </p>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
             <a
               href={siteConfig.resumeUrl}
@@ -94,8 +123,8 @@ export default function About() {
               <Download className="h-4 w-4" /> Download CV
             </a>
           </motion.div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

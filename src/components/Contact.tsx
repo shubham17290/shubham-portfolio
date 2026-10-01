@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
 import {
   Mail,
   Copy,
@@ -52,6 +52,24 @@ const inputClass = (invalid: boolean) =>
       ? "border-red-400/60 focus:border-red-400"
       : "border-white/10 focus:border-white/30"
   }`;
+
+const container: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { staggerChildren: 0.12, delayChildren: 0.1 },
+  },
+};
+
+const item: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+  },
+};
 
 export default function Contact() {
   const [name, setName] = useState("");
@@ -131,22 +149,28 @@ export default function Contact() {
       id="contact"
       className="relative scroll-mt-20 border-t border-white/[0.06] bg-white/[0.01] py-20 sm:py-28"
     >
-      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="mx-auto max-w-6xl px-5 sm:px-8"
+      >
         <SectionHeading
           eyebrow="Contact"
           title="Let's build something great together"
           description="Fill out the form and I'll get back to you as soon as I can."
         />
 
-        <div className="mt-12 grid gap-6 lg:mt-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="mt-12 grid gap-6 lg:mt-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10"
+        >
           {/* Left: heading + email + socials */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="flex flex-col gap-4"
-          >
+          <motion.div variants={item} className="flex flex-col gap-4">
             <div className="rounded-2xl border border-white/[0.07] bg-[#0e0e11] p-6 sm:p-7">
               <h3 className="text-lg font-semibold text-white">Get in touch</h3>
               <p className="mt-2 text-sm leading-relaxed text-zinc-400">
@@ -220,10 +244,7 @@ export default function Contact() {
           <motion.form
             onSubmit={handleSubmit}
             noValidate
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            variants={item}
             className="rounded-2xl border border-white/[0.07] bg-[#0e0e11] p-6 sm:p-8"
           >
             <div className="grid gap-4 sm:grid-cols-2">
@@ -306,8 +327,8 @@ export default function Contact() {
               )}
             </button>
           </motion.form>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Toast */}
       <AnimatePresence>
