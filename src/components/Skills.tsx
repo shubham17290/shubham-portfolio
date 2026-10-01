@@ -1,88 +1,76 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 import { skillCategories } from "@/lib/data";
 
+const container: Variants = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.12, delayChildren: 0.1 },
+  },
+};
+
+const item: Variants = {
+  hidden: { opacity: 0, y: 28 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
 export default function Skills() {
   return (
-    <section id="skills" className="relative scroll-mt-20 border-t border-white/[0.06] bg-white/[0.01] py-20 sm:py-28">
+    <section
+      id="skills"
+      className="relative scroll-mt-20 border-t border-white/[0.06] bg-white/[0.01] py-20 sm:py-28"
+    >
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeading
           eyebrow="Skills"
-          title="A toolkit built for quality & speed"
-          description="Placeholder skills — replace levels and stacks with your own. Grouped so clients see outcomes, not just buzzwords."
+          title="What I work with"
+          description="Three core areas — replace with your own stack. Hover to feel the interaction."
         />
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:mt-16 xl:grid-cols-4">
-          {skillCategories.map((cat, idx) => {
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-60px" }}
+          className="mt-12 grid gap-5 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3"
+        >
+          {skillCategories.slice(0, 3).map((cat) => {
             const Icon = cat.icon;
             return (
               <motion.div
                 key={cat.title}
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.55, delay: idx * 0.08 }}
-                className="group rounded-2xl border border-white/[0.07] bg-[#0e0e11] p-6 transition-all hover:-translate-y-1 hover:border-white/[0.14]"
+                variants={item}
+                whileHover={{ y: -8 }}
+                transition={{ type: "spring", stiffness: 300, damping: 22 }}
+                className="group rounded-2xl border border-white/[0.07] bg-[#0e0e11] p-6 transition-shadow duration-300 hover:border-[var(--accent)]/40 hover:shadow-[0_0_40px_-12px_var(--accent)]"
               >
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.05] text-zinc-200 transition-colors group-hover:bg-white group-hover:text-black">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.05] text-zinc-200 transition-colors group-hover:border-transparent group-hover:bg-[var(--accent)] group-hover:text-black">
                   <Icon className="h-5 w-5" />
                 </div>
                 <h3 className="mt-5 text-[17px] font-semibold text-white">{cat.title}</h3>
-                <p className="mt-1 text-[13px] leading-relaxed text-zinc-500">{cat.description}</p>
+                <p className="mt-1 text-[13px] leading-relaxed text-zinc-500">
+                  {cat.description}
+                </p>
 
-                <div className="mt-5 space-y-4">
+                <ul className="mt-5 flex flex-wrap gap-2">
                   {cat.skills.map((skill) => (
-                    <div key={skill.name}>
-                      <div className="mb-1.5 flex items-center justify-between text-[13px]">
-                        <span className="text-zinc-300">{skill.name}</span>
-                        <span className="font-mono text-[11px] text-zinc-600">{skill.level}%</span>
-                      </div>
-                      <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.07]">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${skill.level}%` }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                          className="h-full rounded-full bg-gradient-to-r from-zinc-100 to-zinc-400"
-                        />
-                      </div>
-                    </div>
+                    <li
+                      key={skill.name}
+                      className="rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 text-[13px] text-zinc-300 transition-colors group-hover:border-white/[0.14]"
+                    >
+                      {skill.name}
+                    </li>
                   ))}
-                </div>
+                </ul>
               </motion.div>
             );
           })}
-        </div>
-
-        {/* Marquee-ish tech pills */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mt-10 flex flex-wrap justify-center gap-2.5"
-        >
-          {[
-            "Next.js 16",
-            "React 19",
-            "TypeScript",
-            "Tailwind v4",
-            "Framer Motion",
-            "Node.js",
-            "PostgreSQL",
-            "Prisma",
-            "Vercel",
-            "Figma",
-          ].map((t) => (
-            <span
-              key={t}
-              className="rounded-full border border-white/[0.08] bg-white/[0.02] px-4 py-1.5 font-mono text-xs text-zinc-400 transition-colors hover:border-white/20 hover:text-white"
-            >
-              {t}
-            </span>
-          ))}
         </motion.div>
       </div>
     </section>

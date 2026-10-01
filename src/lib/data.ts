@@ -1,6 +1,5 @@
 import {
   Code2,
-  Palette,
   Server,
   Wrench,
   type LucideIcon,
@@ -83,25 +82,14 @@ export const skillCategories: SkillCategory[] = [
     ],
   },
   {
-    title: "Design",
-    description: "Minimal systems with premium feel.",
-    icon: Palette,
-    skills: [
-      { name: "Figma / Prototyping", level: 90 },
-      { name: "Design Systems", level: 88 },
-      { name: "Motion Design", level: 82 },
-      { name: "Accessibility", level: 93 },
-    ],
-  },
-  {
-    title: "Tools & DevOps",
+    title: "Tools",
     description: "Ship fast, ship safely.",
     icon: Wrench,
     skills: [
       { name: "Git / GitHub Actions", level: 91 },
       { name: "Docker / AWS", level: 80 },
       { name: "Vercel / Edge", level: 92 },
-      { name: "Testing (Vitest/Playwright)", level: 84 },
+      { name: "Figma / Testing", level: 86 },
     ],
   },
 ];
