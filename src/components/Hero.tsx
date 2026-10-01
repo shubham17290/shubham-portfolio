@@ -36,8 +36,10 @@ function useTypewriter(words: string[]) {
       // Pause for 2 seconds when word is complete
       timeout = setTimeout(() => setIsDeleting(true), 2000);
     } else if (isDeleting && charIndex === 0) {
-      setIsDeleting(false);
-      setWordIndex((prev) => (prev + 1) % words.length);
+      timeout = setTimeout(() => {
+        setIsDeleting(false);
+        setWordIndex((prev) => (prev + 1) % words.length);
+      }, 300);
     } else {
       const speed = isDeleting ? 40 : 80;
       timeout = setTimeout(() => {

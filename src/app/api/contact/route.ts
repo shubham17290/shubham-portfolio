@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const { errors, values } = validate(body ?? {});
+  const { errors } = validate(body ?? {});
 
   if (Object.keys(errors).length > 0) {
     return NextResponse.json({ ok: false, errors }, { status: 400 });
@@ -43,10 +43,6 @@ export async function POST(request: Request) {
   // TODO: wire a real sender here (e.g. Resend) using an env API key.
   // Example:
   //   await resend.emails.send({ from: "...", to: process.env.CONTACT_TO, ... })
-  console.log("[contact] new message:", {
-    ...values,
-    at: new Date().toISOString(),
-  });
 
   return NextResponse.json({ ok: true });
 }

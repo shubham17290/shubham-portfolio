@@ -9,14 +9,15 @@ export default function LoadingScreen() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    let timer: ReturnType<typeof setTimeout> | undefined;
+    let seen = false;
     try {
-      if (sessionStorage.getItem(SEEN_KEY)) return;
+      seen = !!sessionStorage.getItem(SEEN_KEY);
     } catch {
-      return;
+      seen = true;
     }
-    setShow(true);
-    timer = setTimeout(() => {
+    if (seen) return;
+    const showTimer = setTimeout(() => setShow(true), 0);
+    const hideTimer = setTimeout(() => {
       setShow(false);
       try {
         sessionStorage.setItem(SEEN_KEY, "1");
@@ -24,7 +25,10 @@ export default function LoadingScreen() {
         /* storage unavailable */
       }
     }, 1400);
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(showTimer);
+      clearTimeout(hideTimer);
+    };
   }, []);
 
   return (
