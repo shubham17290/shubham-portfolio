@@ -1,6 +1,13 @@
 import { NextResponse } from "next/server";
 import { streamText } from "ai";
 import { google } from "@ai-sdk/google";
+import { getClientIp, rateLimit } from "@/lib/rate-limit";
+
+const MODEL = process.env.CHAT_MODEL ?? "gemini-2.0-flash";
+
+// 10 requests per minute per IP.
+const RATE_LIMIT = 10;
+const RATE_WINDOW_MS = 60_000;
 
 const SYSTEM_PROMPT = `You are the AI assistant on Shubham Maurya's portfolio website. Answer questions about him in a friendly, professional tone. Keep responses short (2-3 sentences max).
 
@@ -16,31 +23,6 @@ About Shubham:
 - Currently open to internship opportunities
 
 If asked something unrelated to Shubham, politely redirect to questions about him.`;
-
-// Basic in-memory rate limiting: max 10 requests per IP per minute.
-// Note: single-instance only; use Redis/Upstash for multi-instance production.
-const WINDOW_MS = 60_000;
-const MAX_REQUESTS = 10;
-const hits = new Map<string, number[]>();
-
-function getClientIp(request: Request): string {
-  const forwarded = request.headers.get("x-forwarded-for");
-  if (forwarded) return forwarded.split(",")[0]?.trim() || "unknown";
-  return request.headers.get("x-real-ip")?.trim() || "unknown";
-}
-
-function isRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const prev = hits.get(ip) ?? [];
-  const recent = prev.filter((t) => now - t < WINDOW_MS);
-  if (recent.length >= MAX_REQUESTS) {
-    hits.set(ip, recent);
-    return true;
-  }
-  recent.push(now);
-  hits.set(ip, recent);
-  return false;
-}
 
 type IncomingMessage = {
   role?: unknown;
@@ -64,10 +46,18 @@ function toModelMessages(body: { messages?: unknown }) {
 }
 
 export async function POST(request: Request) {
-  if (isRateLimited(getClientIp(request))) {
+  const limit = rateLimit(
+    `chat:${getClientIp(request)}`,
+    RATE_LIMIT,
+    RATE_WINDOW_MS
+  );
+  if (!limit.ok) {
     return NextResponse.json(
-      { error: "Rate limit exceeded. Please try again in a minute." },
-      { status: 429 }
+      { error: "Rate limit exceeded. Please try again shortly." },
+      {
+        status: 429,
+        headers: { "Retry-After": String(limit.retryAfterSeconds) },
+      }
     );
   }
 
@@ -93,10 +83,12 @@ export async function POST(request: Request) {
     );
   }
 
+  // streamText() is lazy: it does not contact the provider until the response
+  // stream is consumed, so provider errors surface via onError rather than by
+  // throwing here. This try/catch only guards synchronous setup failures.
   try {
-    console.log("KEY EXISTS:", !!process.env.GOOGLE_GENERATIVE_AI_API_KEY);
     const result = streamText({
-      model: google("gemini-3.8-flash"),
+      model: google(MODEL),
       system: SYSTEM_PROMPT,
       messages,
       onError({ error }) {

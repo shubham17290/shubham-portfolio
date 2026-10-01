@@ -77,6 +77,7 @@ export default function Contact() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState<Errors>({});
+  const [honeypot, setHoneypot] = useState("");
   const [sending, setSending] = useState(false);
   const [copied, setCopied] = useState(false);
   const [toast, setToast] = useState<Toast>(null);
@@ -115,16 +116,17 @@ export default function Contact() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message }),
+        body: JSON.stringify({ name, email, message, company: honeypot }),
       });
       const data = (await res.json().catch(() => null)) as {
         ok?: boolean;
         errors?: Errors;
+        error?: string;
       } | null;
 
       if (!res.ok || !data?.ok) {
         if (data?.errors) setErrors(data.errors);
-        throw new Error("submit-failed");
+        throw new Error(data?.error ?? "submit-failed");
       }
 
       setName("");
@@ -135,10 +137,13 @@ export default function Contact() {
         type: "success",
         message: "Message sent! I'll get back to you soon.",
       });
-    } catch {
+    } catch (e) {
       showToast({
         type: "error",
-        message: "Something went wrong. Please try again.",
+        message:
+          e instanceof Error && e.message !== "submit-failed"
+            ? e.message
+            : "Something went wrong. Please try again.",
       });
     } finally {
       setSending(false);
@@ -246,7 +251,7 @@ export default function Contact() {
             onSubmit={handleSubmit}
             noValidate
             variants={item}
-            className="rounded-2xl border border-white/[0.07] bg-[#0e0e11] p-6 sm:p-8"
+            className="relative rounded-2xl border border-white/[0.07] bg-[#0e0e11] p-6 sm:p-8"
           >
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="block">
@@ -310,6 +315,21 @@ export default function Contact() {
                 <span className="mt-1.5 block text-xs text-red-400">{errors.message}</span>
               )}
             </label>
+
+            {/* Honeypot: hidden from users, tempting to bots. Not display:none
+                so it stays out of the accessibility tree and screen readers. */}
+            <div aria-hidden="true" className="absolute left-[-9999px] top-auto h-0 w-0 overflow-hidden">
+              <label htmlFor="company">Company (leave blank)</label>
+              <input
+                id="company"
+                name="company"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+              />
+            </div>
 
             <MagneticButton className="mt-6 inline-block w-full sm:w-auto">
               <button
