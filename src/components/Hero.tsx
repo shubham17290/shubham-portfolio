@@ -62,6 +62,101 @@ const fadeUp = {
   }),
 };
 
+const TERMINAL_LINES = [
+  "$ whoami",
+  "→ Shubham Maurya — Full-Stack Developer",
+  "$ cat skills.txt",
+  "→ Next.js, React, TypeScript, Node.js, AI",
+  "$ status",
+  "→ AI Intern @ IBM | Open to opportunities ✅",
+];
+
+function TerminalCard() {
+  const [lineIndex, setLineIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [done, setDone] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (lineIndex >= TERMINAL_LINES.length) return;
+    const currentLine = TERMINAL_LINES[lineIndex];
+    if (charIndex < currentLine.length) {
+      const t = setTimeout(() => {
+        setCharIndex((c) => c + 1);
+      }, 32);
+      return () => clearTimeout(t);
+    }
+    const t = setTimeout(() => {
+      setDone((d) => [...d, currentLine]);
+      setLineIndex((i) => i + 1);
+      setCharIndex(0);
+    }, 380);
+    return () => clearTimeout(t);
+  }, [lineIndex, charIndex]);
+
+  const currentText =
+    lineIndex < TERMINAL_LINES.length
+      ? TERMINAL_LINES[lineIndex].slice(0, charIndex)
+      : "";
+
+  return (
+    <motion.div
+      variants={fadeUp}
+      initial="hidden"
+      animate="show"
+      custom={6}
+      className="w-full"
+    >
+      <motion.div
+        animate={{ y: [0, -8, 0] }}
+        transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+        className="overflow-hidden rounded-2xl border border-white/10 bg-[#0b0b0e]/95 shadow-[0_0_50px_-12px_rgba(255,255,255,0.2)] backdrop-blur"
+      >
+        <div className="flex items-center gap-2 border-b border-white/[0.07] px-4 py-3">
+          <span className="h-3 w-3 rounded-full bg-red-500" />
+          <span className="h-3 w-3 rounded-full bg-yellow-500" />
+          <span className="h-3 w-3 rounded-full bg-green-500" />
+          <span className="ml-2 font-mono text-xs text-zinc-500">terminal</span>
+        </div>
+        <div className="min-h-[228px] p-5 font-mono text-[13px] leading-relaxed">
+          {done.map((line) => (
+            <p
+              key={line}
+              className={
+                line.startsWith("$")
+                  ? "text-emerald-300"
+                  : "text-zinc-400"
+              }
+            >
+              {line}
+            </p>
+          ))}
+          {lineIndex < TERMINAL_LINES.length && (
+            <p
+              className={
+                TERMINAL_LINES[lineIndex].startsWith("$")
+                  ? "text-emerald-300"
+                  : "text-zinc-400"
+              }
+            >
+              {currentText}
+              <span aria-hidden className="ml-0.5 inline-block animate-pulse text-emerald-400">
+                ▊
+              </span>
+            </p>
+          )}
+          {lineIndex >= TERMINAL_LINES.length && (
+            <p className="text-emerald-300">
+              <span aria-hidden className="inline-block animate-pulse text-emerald-400">
+                ▊
+              </span>
+            </p>
+          )}
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export default function Hero() {
   const typedRole = useTypewriter(ROLES);
 
@@ -79,7 +174,8 @@ export default function Hero() {
       />
 
       <div className="relative mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 lg:py-28">
-        <div className="max-w-3xl">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="max-w-3xl">
           <motion.div variants={fadeUp} initial="hidden" animate="show" custom={0}>
             <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] py-1.5 pl-1.5 pr-4 text-[13px] text-zinc-300 backdrop-blur">
               <span className="inline-flex items-center gap-1 rounded-full bg-emerald-400/10 px-2.5 py-0.5 text-xs font-medium text-emerald-300">
@@ -223,6 +319,8 @@ export default function Hero() {
               {siteConfig.email}
             </a>
           </motion.div>
+          </div>
+          <TerminalCard />
         </div>
 
         {/* scroll hint */}

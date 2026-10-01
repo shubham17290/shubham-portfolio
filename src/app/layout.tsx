@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BackgroundBlobs from "@/components/BackgroundBlobs";
 import ScrollProgress from "@/components/ScrollProgress";
+import CommandPalette from "@/components/CommandPalette";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -133,6 +134,7 @@ export default function RootLayout({
         <div className="relative min-h-screen bg-[var(--color-bg)]">
           <ScrollProgress />
           <BackgroundBlobs />
+          <CommandPalette />
           <Navbar />
           <main className="relative">{children}</main>
           <Footer />

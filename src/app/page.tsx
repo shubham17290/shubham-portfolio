@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 // so the initial bundle only ships what's needed for first paint.
 const About = dynamic(() => import("@/components/About"));
 const Skills = dynamic(() => import("@/components/Skills"));
+const GitHubStats = dynamic(() => import("@/components/GitHubStats"));
 const Projects = dynamic(() => import("@/components/Projects"));
 const Contact = dynamic(() => import("@/components/Contact"));
 
@@ -14,6 +15,7 @@ export default function Home() {
       <Hero />
       <About />
       <Skills />
+      <GitHubStats />
       <Projects />
       <Contact />
     </>

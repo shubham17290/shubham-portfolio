@@ -194,6 +194,16 @@ export default function Projects() {
   const [selected, setSelected] = useState<Project | null>(null);
 
   useEffect(() => {
+    const onOpenProject = (e: Event) => {
+      const title = (e as CustomEvent<string>).detail;
+      const found = projects.find((p) => p.title === title);
+      if (found) setSelected(found);
+    };
+    window.addEventListener("open-project", onOpenProject);
+    return () => window.removeEventListener("open-project", onOpenProject);
+  }, []);
+
+  useEffect(() => {
     if (!selected) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setSelected(null);
