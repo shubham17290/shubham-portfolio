@@ -1,0 +1,21 @@
+{
+  "name": "Shubham Maurya — Portfolio",
+  "short_name": "Shubham",
+  "description": "Portfolio of Shubham Maurya, Full-Stack Developer and AI Intern at IBM. Building minimal, premium web experiences with Next.js, React, TypeScript, and AI.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

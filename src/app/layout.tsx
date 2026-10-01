@@ -5,11 +5,10 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BackgroundBlobs from "@/components/BackgroundBlobs";
 import ScrollProgress from "@/components/ScrollProgress";
-import CommandPalette from "@/components/CommandPalette";
-import ChatWidget from "@/components/ChatWidget";
 import LoadingScreen from "@/components/LoadingScreen";
 import EasterEggs from "@/components/EasterEggs";
 import BackToTop from "@/components/BackToTop";
+import LazyWidgets from "@/components/LazyWidgets";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,34 +24,28 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  // TODO: replace "https://example.com" with your real domain when ready.
-  metadataBase: new URL("https://example.com"),
+  metadataBase: new URL("https://shubham-maurya-seven.vercel.app"),
 
-  title: {
-    default: "Shubham Maurya — Full-Stack Developer & Designer",
-    template: "%s | Shubham Maurya"
-  },
+  title: "Shubham Maurya — Full-Stack Developer & AI Intern at IBM",
 
   description:
-    "Portfolio of Shubham Maurya, a full-stack developer crafting minimal, premium web experiences with Next.js, TypeScript, and modern design.",
+    "Portfolio of Shubham Maurya, Full-Stack Developer and AI Intern at IBM. Building minimal, premium web experiences with Next.js, React, TypeScript, and AI.",
 
   keywords: [
     "Shubham Maurya",
-    "portfolio",
-    "full-stack developer",
-    "Next.js",
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "web developer",
-    "frontend developer",
-    "UI design"
+    "Full-Stack Developer",
+    "Next.js Developer",
+    "React Developer",
+    "AI Intern",
+    "IBM Intern",
+    "Portfolio",
+    "Kanpur Developer"
   ],
 
   authors: [
     {
       name: "Shubham Maurya",
-      url: "https://example.com"
+      url: "https://shubham-maurya-seven.vercel.app"
     }
   ],
 
@@ -60,15 +53,15 @@ export const metadata: Metadata = {
 
   openGraph: {
     type: "website",
-    locale: "en_US",
-    url: "https://example.com",
+    locale: "en_IN",
+    url: "https://shubham-maurya-seven.vercel.app",
     siteName: "Shubham Maurya — Portfolio",
-    title: "Shubham Maurya — Full-Stack Developer & Designer",
+    title: "Shubham Maurya — Full-Stack Developer & AI Intern at IBM",
     description:
-      "I build minimal, premium web experiences with Next.js, TypeScript and thoughtful design.",
+      "Portfolio of Shubham Maurya, Full-Stack Developer and AI Intern at IBM. Building minimal, premium web experiences with Next.js, React, TypeScript, and AI.",
     images: [
       {
-        url: "/opengraph-image",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Shubham Maurya — Portfolio"
@@ -78,27 +71,24 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Shubham Maurya — Full-Stack Developer",
+    title: "Shubham Maurya — Full-Stack Developer & AI Intern at IBM",
     description:
-      "Minimal, premium web experiences built with Next.js and TypeScript.",
-    images: ["/opengraph-image"]
+      "Portfolio of Shubham Maurya, Full-Stack Developer and AI Intern at IBM. Building minimal, premium web experiences with Next.js, React, TypeScript, and AI.",
+    images: ["/og-image.png"],
+    creator: "@shubh_1729"
   },
 
   robots: {
     index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1
-    }
+    follow: true
   },
 
   icons: {
-    icon: "/favicon.svg",
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png"
   },
+
+  manifest: "/manifest.json",
 
   alternates: {
     canonical: "/",
@@ -139,13 +129,12 @@ export default function RootLayout({
           <LoadingScreen />
           <ScrollProgress />
           <BackgroundBlobs />
-          <CommandPalette />
           <EasterEggs />
           <Navbar />
           <main className="relative">{children}</main>
           <Footer />
           <BackToTop />
-          <ChatWidget />
+          <LazyWidgets />
         </div>
       </body>
     </html>

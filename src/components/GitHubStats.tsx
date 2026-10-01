@@ -78,6 +78,7 @@ export default function GitHubStats() {
   const [repos, setRepos] = useState(0);
   const [stars, setStars] = useState(0);
   const [streak, setStreak] = useState(0);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -110,6 +111,8 @@ export default function GitHubStats() {
         }
       } catch {
         /* offline or rate-limited: keep counters at 0 */
+      } finally {
+        if (!cancelled) setLoaded(true);
       }
     }
     load();
@@ -159,10 +162,19 @@ export default function GitHubStats() {
                 <Icon className="h-5 w-5" />
               </div>
               <div className="mt-4">
-                <StatNumber value={value} />
-                {suffix ? (
-                  <span className="text-xs text-zinc-500">{suffix}</span>
-                ) : null}
+                {loaded ? (
+                  <>
+                    <StatNumber value={value} />
+                    {suffix ? (
+                      <span className="text-xs text-zinc-500">{suffix}</span>
+                    ) : null}
+                  </>
+                ) : (
+                  <div
+                    aria-hidden
+                    className="mx-auto h-8 w-20 animate-pulse rounded-md bg-white/10"
+                  />
+                )}
               </div>
               <p className="mt-1 text-[11px] uppercase tracking-wider text-zinc-500">
                 {label}

@@ -57,7 +57,7 @@ export default function Navbar() {
         }`}
       >
         <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
-          <a href="#home" onClick={handleLogoClick} className="group relative flex items-center gap-2.5">
+          <a href="#home" onClick={handleLogoClick} aria-label="Shubham Maurya — home" className="group relative flex items-center gap-2.5">
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-sm font-bold text-black transition-transform group-hover:scale-105">
               S
             </span>

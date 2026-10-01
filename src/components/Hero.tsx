@@ -314,7 +314,7 @@ export default function Hero() {
             <span className="h-px w-12 bg-white/10" />
             <a
               href={`mailto:${siteConfig.email}`}
-              className="font-mono text-xs text-zinc-600 transition-colors hover:text-zinc-300"
+              className="font-mono text-xs text-zinc-400 transition-colors hover:text-zinc-300"
             >
               {siteConfig.email}
             </a>
