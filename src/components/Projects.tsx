@@ -70,7 +70,7 @@ export default function Projects() {
                   <a
                     href={project.githubUrl}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm font-medium text-zinc-200 transition-colors hover:bg-white/[0.08] hover:text-white"
                   >
                     <Github className="h-4 w-4" /> Code
@@ -78,7 +78,7 @@ export default function Projects() {
                   <a
                     href={project.liveUrl}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-white px-4 py-2.5 text-sm font-medium text-black transition-colors hover:bg-zinc-200"
                   >
                     Live Demo <ArrowUpRight className="h-4 w-4" />
@@ -98,7 +98,7 @@ export default function Projects() {
           <a
             href="https://github.com"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="group inline-flex items-center gap-2 rounded-full border border-white/10 px-6 py-3 text-sm font-medium text-zinc-300 transition-colors hover:border-white/25 hover:text-white"
           >
             <Github className="h-4 w-4" />

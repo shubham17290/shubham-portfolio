@@ -26,7 +26,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="bg-glow relative flex min-h-screen items-center overflow-hidden pt-16"
+      className="bg-glow relative flex min-h-screen scroll-mt-20 items-center overflow-hidden pt-16"
     >
       {/* grid overlay */}
       <div className="bg-grid mask-fade-y absolute inset-0" aria-hidden />
@@ -153,7 +153,7 @@ export default function Hero() {
                   key={label}
                   href={href}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   aria-label={label}
                   className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-zinc-400 transition-all hover:border-white/20 hover:text-white"
                 >
@@ -162,7 +162,12 @@ export default function Hero() {
               ))}
             </div>
             <span className="h-px w-12 bg-white/10" />
-            <p className="font-mono text-xs text-zinc-600">{siteConfig.email}</p>
+            <a
+              href={`mailto:${siteConfig.email}`}
+              className="font-mono text-xs text-zinc-600 transition-colors hover:text-zinc-300"
+            >
+              {siteConfig.email}
+            </a>
           </motion.div>
         </div>
 

@@ -11,19 +11,25 @@ import {
   Linkedin,
   Twitter,
   Dribbble,
+  Code2,
+  Globe,
   CheckCircle2,
   AlertCircle,
   Loader2,
+  type LucideIcon,
 } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import { siteConfig, socials } from "@/lib/data";
 
-const socialIcons = {
+const socialIcons: Record<string, LucideIcon> = {
   Github,
   Linkedin,
   Twitter,
   Dribbble,
-} as const;
+  Code2,
+};
+
+const fallbackIcon = Globe;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -148,11 +154,11 @@ export default function Contact() {
                 freelance, full-time roles and fun collaborations.
               </p>
 
-              <button
-                onClick={copyEmail}
-                className="group mt-6 flex w-full items-center justify-between gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3.5 text-left transition-colors hover:border-white/20"
-              >
-                <span className="flex items-center gap-3">
+              <div className="group mt-6 flex w-full items-center justify-between gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3.5 text-left transition-colors hover:border-white/20">
+                <a
+                  href={`mailto:${siteConfig.email}`}
+                  className="flex items-center gap-3"
+                >
                   <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-black">
                     <Mail className="h-5 w-5" />
                   </span>
@@ -164,15 +170,20 @@ export default function Contact() {
                       {siteConfig.email}
                     </span>
                   </span>
-                </span>
-                <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-zinc-400 transition-colors group-hover:text-white">
+                </a>
+                <button
+                  type="button"
+                  onClick={copyEmail}
+                  aria-label="Copy email address"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 text-zinc-400 transition-colors hover:text-white"
+                >
                   {copied ? (
                     <Check className="h-4 w-4 text-emerald-400" />
                   ) : (
                     <Copy className="h-4 w-4" />
                   )}
-                </span>
-              </button>
+                </button>
+              </div>
 
               {copied && (
                 <p className="mt-3 text-center text-xs font-medium text-emerald-400">
@@ -186,13 +197,13 @@ export default function Contact() {
                 </p>
                 <div className="mt-3 flex items-center gap-2">
                   {socials.map((s) => {
-                    const Icon = socialIcons[s.icon];
+                    const Icon = socialIcons[s.icon] ?? fallbackIcon;
                     return (
                       <a
                         key={s.label}
                         href={s.href}
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noopener noreferrer"
                         aria-label={s.label}
                         className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-zinc-400 transition-all hover:border-white/20 hover:text-white"
                       >

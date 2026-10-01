@@ -88,6 +88,7 @@ export default function About() {
 
             <a
               href={siteConfig.resumeUrl}
+              download
               className="mt-7 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition-colors hover:bg-zinc-200"
             >
               <Download className="h-4 w-4" /> Download CV
