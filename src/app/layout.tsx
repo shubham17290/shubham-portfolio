@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import BackgroundBlobs from "@/components/BackgroundBlobs";
 import ScrollProgress from "@/components/ScrollProgress";
 import CommandPalette from "@/components/CommandPalette";
+import ChatWidget from "@/components/ChatWidget";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -138,6 +139,7 @@ export default function RootLayout({
           <Navbar />
           <main className="relative">{children}</main>
           <Footer />
+          <ChatWidget />
         </div>
       </body>
     </html>
