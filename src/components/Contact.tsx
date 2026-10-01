@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import { siteConfig, socials } from "@/lib/data";
+import MagneticButton from "@/components/MagneticButton";
 
 const socialIcons: Record<string, LucideIcon> = {
   Github,
@@ -310,22 +311,24 @@ export default function Contact() {
               )}
             </label>
 
-            <button
-              type="submit"
-              disabled={sending}
-              className="group mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-[15px] font-medium text-black transition-all hover:bg-zinc-200 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-8"
-            >
-              {sending ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" /> Sending...
-                </>
-              ) : (
-                <>
-                  Send Message{" "}
-                  <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </>
-              )}
-            </button>
+            <MagneticButton className="mt-6 inline-block w-full sm:w-auto">
+              <button
+                type="submit"
+                disabled={sending}
+                className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-[15px] font-medium text-black transition-all hover:bg-zinc-200 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-8"
+              >
+                {sending ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" /> Sending...
+                  </>
+                ) : (
+                  <>
+                    Send Message{" "}
+                    <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </>
+                )}
+              </button>
+            </MagneticButton>
           </motion.form>
         </motion.div>
       </motion.div>

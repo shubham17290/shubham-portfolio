@@ -13,6 +13,7 @@ import {
   Download,
 } from "lucide-react";
 import { siteConfig } from "@/lib/data";
+import MagneticButton from "@/components/MagneticButton";
 
 const ROLES = [
   "Full-Stack Developer",
@@ -160,13 +161,15 @@ export default function Hero() {
             custom={4}
             className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
           >
-            <a
-              href="#projects"
-              className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-[15px] font-medium text-black transition-all hover:bg-zinc-200 hover:shadow-[0_0_40px_-8px_rgba(255,255,255,0.4)]"
-            >
-              View My Work
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </a>
+            <MagneticButton>
+              <a
+                href="#projects"
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-[15px] font-medium text-black transition-all hover:bg-zinc-200 hover:shadow-[0_0_40px_-8px_rgba(255,255,255,0.4)]"
+              >
+                View My Work
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </a>
+            </MagneticButton>
             <a
               href="#contact"
               className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-7 py-3.5 text-[15px] font-medium text-zinc-100 backdrop-blur transition-colors hover:bg-white/[0.08]"
@@ -174,14 +177,16 @@ export default function Hero() {
               <Sparkles className="h-4 w-4 text-zinc-400" />
               Get in Touch
             </a>
-            <a
-              href="/resume.pdf"
-              download
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 bg-transparent px-7 py-3.5 text-[15px] font-medium text-zinc-300 transition-colors hover:border-white/25 hover:text-white"
-            >
-              <Download className="h-4 w-4" />
-              Resume
-            </a>
+            <MagneticButton>
+              <a
+                href="/resume.pdf"
+                download
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 bg-transparent px-7 py-3.5 text-[15px] font-medium text-zinc-300 transition-colors hover:border-white/25 hover:text-white"
+              >
+                <Download className="h-4 w-4" />
+                Resume
+              </a>
+            </MagneticButton>
           </motion.div>
 
           <motion.div
@@ -197,16 +202,17 @@ export default function Hero() {
                 { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
                 { icon: Twitter, href: "https://x.com", label: "Twitter" },
               ].map(({ icon: Icon, href, label }) => (
-                <a
+                <motion.a
                   key={label}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-zinc-400 transition-all hover:border-white/20 hover:text-white"
+                  whileHover={{ y: -3, transition: { duration: 0.15, repeat: 1, repeatType: "reverse" } }}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-zinc-400 transition-colors hover:border-white/20 hover:text-white"
                 >
                   <Icon className="h-[18px] w-[18px]" />
-                </a>
+                </motion.a>
               ))}
             </div>
             <span className="h-px w-12 bg-white/10" />

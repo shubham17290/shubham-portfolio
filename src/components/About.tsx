@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, type Variants, useInView, animate } from "framer-motion";
 import { User, Download } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import { aboutParagraphs, stats, siteConfig } from "@/lib/data";
@@ -25,6 +26,30 @@ const item: Variants = {
     transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
   },
 };
+
+function StatValue({ value }: { value: string }) {
+  const ref = useRef<HTMLParagraphElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.5 });
+  const [display, setDisplay] = useState(0);
+  const numeric = parseInt(value, 10);
+
+  useEffect(() => {
+    if (!inView || Number.isNaN(numeric)) return;
+    const controls = animate(0, numeric, {
+      duration: 1.6,
+      ease: [0.22, 1, 0.36, 1],
+      onUpdate: (v) => setDisplay(Math.round(v)),
+    });
+    return () => controls.stop();
+  }, [inView, numeric]);
+
+  if (Number.isNaN(numeric)) return <span ref={ref}>{value}</span>;
+  return (
+    <p ref={ref} className="text-xl font-semibold text-white sm:text-2xl">
+      {display}
+    </p>
+  );
+}
 
 export default function About() {
   return (
@@ -107,7 +132,7 @@ export default function About() {
                   variants={item}
                   className="rounded-xl border border-white/[0.07] bg-white/[0.02] px-3 py-5 text-center transition-colors hover:border-white/[0.14]"
                 >
-                  <p className="text-xl font-semibold text-white sm:text-2xl">{s.value}</p>
+                  <StatValue value={s.value} />
                   <p className="mt-1 text-[11px] uppercase tracking-wider text-zinc-500">
                     {s.label}
                   </p>

@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Github, Linkedin, Twitter, Dribbble, ArrowUp, Heart } from "lucide-react";
 import { navLinks, siteConfig } from "@/lib/data";
 
@@ -48,16 +51,17 @@ export default function Footer() {
 
           <div className="flex items-center gap-2">
             {socialIcons.map(({ label, href, Icon }) => (
-              <a
+              <motion.a
                 key={label}
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-zinc-500 transition-all hover:border-white/20 hover:text-white"
+                whileHover={{ y: -3, transition: { duration: 0.15, repeat: 1, repeatType: "reverse" } }}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-zinc-500 transition-colors hover:border-white/20 hover:text-white"
               >
                 <Icon className="h-[18px] w-[18px]" />
-              </a>
+              </motion.a>
             ))}
             <a
               href="#home"

@@ -53,9 +53,13 @@ export default function Navbar() {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="rounded-full px-4 py-2 text-sm text-zinc-400 transition-colors hover:bg-white/[0.06] hover:text-white"
+                  className="group relative rounded-full px-4 py-2 text-sm text-zinc-400 transition-colors hover:bg-white/[0.06] hover:text-white"
                 >
                   {link.label}
+                  <span
+                    aria-hidden
+                    className="absolute bottom-1 left-4 right-4 h-px origin-left scale-x-0 bg-white/80 transition-transform duration-300 group-hover:scale-x-100"
+                  />
                 </a>
               </li>
             ))}

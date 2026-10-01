@@ -66,16 +66,38 @@ export default function Skills() {
                   {cat.description}
                 </p>
 
-                <ul className="mt-5 flex flex-wrap gap-2">
-                  {cat.skills.map((skill) => (
-                    <li
-                      key={skill.name}
-                      className="rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 text-[13px] text-zinc-300 transition-colors group-hover:border-white/[0.14]"
-                    >
-                      {skill.name}
-                    </li>
+                <div className="mt-5 space-y-4">
+                  {cat.skills.map((skill, i) => (
+                    <div key={skill.name}>
+                      <div className="mb-1.5 flex items-center justify-between text-[13px]">
+                        <span className="text-zinc-300">{skill.name}</span>
+                        <span className="font-mono text-xs text-zinc-500">
+                          {skill.level}%
+                        </span>
+                      </div>
+                      <div
+                        className="h-1.5 overflow-hidden rounded-full bg-white/10"
+                        role="progressbar"
+                        aria-valuenow={skill.level}
+                        aria-valuemin={0}
+                        aria-valuemax={100}
+                        aria-label={skill.name}
+                      >
+                        <motion.div
+                          initial={{ width: "0%" }}
+                          whileInView={{ width: `${skill.level}%` }}
+                          viewport={{ once: true, amount: 0.2 }}
+                          transition={{
+                            duration: 1,
+                            delay: i * 0.1,
+                            ease: [0.22, 1, 0.36, 1],
+                          }}
+                          className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-teal-300"
+                        />
+                      </div>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </motion.div>
             );
           })}
