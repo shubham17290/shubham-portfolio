@@ -81,7 +81,7 @@ src/
     Navbar.tsx / Footer.tsx / BackgroundBlobs.tsx / ScrollProgress.tsx
   lib/data.ts              # Site content (edit me)
 public/
-  profile.jpg  manifest.json  resume.pdf  favicon.ico (add)  og-image.png (add)
+  profile.webp  manifest.json  resume.pdf  favicon.svg
 ```
 
 ## Credits

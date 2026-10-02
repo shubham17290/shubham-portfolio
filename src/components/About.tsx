@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, type Variants, useInView, animate } from "framer-motion";
 import Image from "next/image";
+import profileImage from "../../public/profile.webp";
 import { Download } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import { aboutParagraphs, stats, siteConfig } from "@/lib/data";
@@ -82,12 +83,13 @@ export default function About() {
           >
             <div className="relative aspect-square overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] shadow-[0_1px_0_0_rgba(255,255,255,0.05)_inset]">
               <Image
-                src="/profile.jpg"
+                src={profileImage}
                 alt={`${siteConfig.name} — profile photo`}
                 fill
                 sizes="(max-width: 1024px) 100vw, 400px"
                 className="object-cover"
                 priority
+                placeholder="blur"
               />
               {/* accent corner */}
               <div

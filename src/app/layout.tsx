@@ -61,7 +61,7 @@ export const metadata: Metadata = {
       "Portfolio of Shubham Maurya, Full-Stack Developer and AI Intern at IBM. Building minimal, premium web experiences with Next.js, React, TypeScript, and AI.",
     images: [
       {
-        url: "/og-image.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "Shubham Maurya — Portfolio"
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     title: "Shubham Maurya — Full-Stack Developer & AI Intern at IBM",
     description:
       "Portfolio of Shubham Maurya, Full-Stack Developer and AI Intern at IBM. Building minimal, premium web experiences with Next.js, React, TypeScript, and AI.",
-    images: ["/og-image.png"],
+    images: ["/opengraph-image"],
     creator: "@shubh_1729"
   },
 
@@ -84,8 +84,8 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png"
+    icon: "/favicon.svg",
+    apple: "/favicon.svg"
   },
 
   manifest: "/manifest.json",
