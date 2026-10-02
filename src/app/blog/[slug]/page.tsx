@@ -24,6 +24,9 @@ export async function generateMetadata({
     return { title: "Post not found — Shubham Maurya" };
   }
   const url = `${links.portfolio}/blog/${post.slug}`;
+  // Relative OG URL resolves against metadataBase (root layout) to an
+  // absolute URL in production.
+  const ogImage = `/api/og?slug=${post.slug}`;
   return {
     title: `${post.title} — Shubham Maurya`,
     description: post.excerpt,
@@ -32,6 +35,20 @@ export async function generateMetadata({
       title: post.title,
       description: post.excerpt,
       url,
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [ogImage],
     },
   };
 }
