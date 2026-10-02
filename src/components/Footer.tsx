@@ -15,8 +15,8 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative border-t border-white/[0.06] bg-[#08080a]">
-      <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8">
+    <footer className="relative border-t border-white/10 bg-[#08080a]">
+      <div className="mx-auto max-w-6xl px-6 py-12 sm:px-8">
         <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
           <div>
             <a href="#home" aria-label="Shubham Maurya — home" className="flex items-center gap-2.5">
@@ -66,14 +66,14 @@ export default function Footer() {
             <a
               href="#home"
               aria-label="Back to top"
-              className="ml-1 flex h-10 w-10 items-center justify-center rounded-full bg-white text-black transition-colors hover:bg-zinc-200 active:scale-95"
+              className="ml-1 flex h-10 w-10 items-center justify-center rounded-full bg-primary text-black transition-colors hover:bg-primary/90 active:scale-95"
             >
               <ArrowUp className="h-4 w-4" />
             </a>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-white/[0.06] pt-7 sm:flex-row">
+        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-7 sm:flex-row">
           <p className="text-[13px] text-zinc-400">
             © {year} {siteConfig.name}. All rights reserved.
           </p>

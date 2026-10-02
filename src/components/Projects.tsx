@@ -98,7 +98,7 @@ function ProjectCard({
       tabIndex={0}
       role="button"
       aria-label={`Open ${project.title} details`}
-      className="group flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-white/[0.07] bg-[#0e0e11] shadow-[0_10px_40px_-15px_rgba(0,0,0,0.7)] transition-all hover:border-white/[0.15] hover:shadow-[0_20px_60px_-20px_rgba(0,0,0,0.8)] active:scale-95"
+      className="group flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] shadow-[0_1px_0_0_rgba(255,255,255,0.05)_inset] transition-colors hover:border-white/20 active:scale-95"
     >
       <div ref={ref as React.RefObject<HTMLDivElement>} className="contents">
         {/* Thumbnail placeholder */}
@@ -119,11 +119,11 @@ function ProjectCard({
             </span>
           </div>
           {project.featured && (
-            <span className="absolute left-4 top-4 inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-1 text-[11px] font-medium text-black">
+            <span className="absolute left-4 top-4 inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-1 text-xs font-medium uppercase tracking-wider text-black">
               <Star className="h-3 w-3 fill-black" /> Featured
             </span>
           )}
-          <span className="absolute right-4 top-4 rounded-full border border-white/10 bg-black/60 px-2.5 py-1 font-mono text-[11px] text-zinc-400 backdrop-blur">
+          <span className="absolute right-4 top-4 rounded-full border border-white/10 bg-black/60 px-2.5 py-1 font-mono text-xs uppercase tracking-wider text-zinc-400 backdrop-blur">
             {project.year}
           </span>
           {/* hover overlay */}
@@ -131,7 +131,7 @@ function ProjectCard({
         </div>
 
         <div className="flex flex-1 flex-col p-6">
-          <h3 className="text-lg font-semibold tracking-tight text-white transition-colors group-hover:text-zinc-100">
+          <h3 className="text-xl font-semibold tracking-tight text-white transition-colors group-hover:text-zinc-100 sm:text-2xl">
             {project.title}
           </h3>
           <p className="mt-2 flex-1 text-sm leading-relaxed text-zinc-400">
@@ -148,7 +148,7 @@ function ProjectCard({
               <motion.span
                 key={tag}
                 variants={badgeItem}
-                className="rounded-md bg-white/[0.06] px-2 py-1 font-mono text-[11px] text-zinc-400"
+                className="rounded-md bg-white/[0.06] px-2 py-1 font-mono text-xs text-zinc-400"
               >
                 {tag}
               </motion.span>
@@ -156,7 +156,7 @@ function ProjectCard({
           </motion.div>
 
           <div
-            className="mt-5 flex items-center gap-2 border-t border-white/[0.06] pt-5"
+            className="mt-5 flex items-center gap-2 border-t border-white/10 pt-5"
             onClick={(e) => e.stopPropagation()}
           >
             <a
@@ -164,7 +164,7 @@ function ProjectCard({
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm font-medium text-zinc-200 transition-colors hover:bg-white/[0.08] hover:text-white"
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
             >
               <Github className="h-4 w-4" /> Code
             </a>
@@ -174,12 +174,12 @@ function ProjectCard({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-white px-4 py-2.5 text-sm font-medium text-black transition-colors hover:bg-zinc-200"
+                className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-medium bg-primary text-black hover:bg-primary/90 transition-colors"
               >
                 Live Demo <ArrowUpRight className="h-4 w-4" />
               </a>
             ) : (
-              <span className="inline-flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-full bg-white px-4 py-2.5 text-sm font-medium text-black transition-colors hover:bg-zinc-200 active:scale-95">
+              <span className="inline-flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-medium bg-primary text-black hover:bg-primary/90 transition-colors">
                 View Details <ArrowUpRight className="h-4 w-4" />
               </span>
             )}
@@ -217,13 +217,13 @@ export default function Projects() {
   }, [selected]);
 
   return (
-    <section id="projects" className="relative scroll-mt-20 py-20 sm:py-28">
+    <section id="projects" className="relative scroll-mt-20 py-24">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="mx-auto max-w-6xl px-5 sm:px-8"
+        className="mx-auto max-w-6xl px-6 sm:px-8"
       >
         <SectionHeading
           eyebrow="Projects"
@@ -236,7 +236,7 @@ export default function Projects() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          className="mt-12 grid gap-5 md:grid-cols-2 lg:mt-16 lg:grid-cols-3"
+          className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
         >
           {projects.map((project) => (
             <ProjectCard key={project.title} project={project} onSelect={setSelected} />
@@ -254,7 +254,7 @@ export default function Projects() {
             href="https://github.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 rounded-full border border-white/10 px-6 py-3 text-sm font-medium text-zinc-300 transition-colors hover:border-white/25 hover:text-white active:scale-95"
+            className="group inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
           >
             <Github className="h-4 w-4" />
             See more on GitHub
@@ -283,7 +283,7 @@ export default function Projects() {
               exit={{ opacity: 0, y: 12, scale: 0.98 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-white/10 bg-[#0e0e11] p-6 sm:p-8"
+              className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-8 shadow-[0_1px_0_0_rgba(255,255,255,0.05)_inset]"
             >
               <button
                 onClick={() => setSelected(null)}
@@ -293,10 +293,10 @@ export default function Projects() {
                 <X className="h-4 w-4" />
               </button>
 
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500">
+              <p className="font-mono text-xs uppercase tracking-wider text-zinc-500">
                 {selected.year} {selected.featured ? "· Featured" : ""}
               </p>
-              <h3 className="mt-2 text-2xl font-semibold tracking-tight text-white">
+              <h3 className="mt-2 text-xl font-semibold tracking-tight text-white sm:text-2xl">
                 {selected.title}
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-zinc-400">
@@ -307,19 +307,19 @@ export default function Projects() {
                 {selected.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-md bg-white/[0.06] px-2 py-1 font-mono text-[11px] text-zinc-300"
+                    className="rounded-md bg-white/[0.06] px-2 py-1 font-mono text-xs text-zinc-300"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
 
-              <div className="mt-6 flex items-center gap-2 border-t border-white/[0.06] pt-6">
+              <div className="mt-6 flex items-center gap-2 border-t border-white/10 pt-6">
                 <a
                   href={selected.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm font-medium text-zinc-200 transition-colors hover:bg-white/[0.08] hover:text-white active:scale-95"
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
                 >
                   <Github className="h-4 w-4" /> Code
                 </a>
@@ -328,7 +328,7 @@ export default function Projects() {
                     href={selected.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-white px-4 py-2.5 text-sm font-medium text-black transition-colors hover:bg-zinc-200 active:scale-95"
+                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-medium bg-primary text-black hover:bg-primary/90 transition-colors"
                   >
                     Live Demo <ArrowUpRight className="h-4 w-4" />
                   </a>

@@ -153,14 +153,14 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative scroll-mt-20 border-t border-white/[0.06] bg-white/[0.01] py-20 sm:py-28"
+      className="relative scroll-mt-20 border-t border-white/10 bg-white/[0.01] py-24"
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="mx-auto max-w-6xl px-5 sm:px-8"
+        className="mx-auto max-w-6xl px-6 sm:px-8"
       >
         <SectionHeading
           eyebrow="Contact"
@@ -173,18 +173,18 @@ export default function Contact() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          className="mt-12 grid gap-6 lg:mt-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10"
+          className="mt-12 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]"
         >
           {/* Left: heading + email + socials */}
           <motion.div variants={item} className="flex flex-col gap-4">
-            <div className="rounded-2xl border border-white/[0.07] bg-[#0e0e11] p-6 sm:p-7">
-              <h3 className="text-lg font-semibold text-white">Get in touch</h3>
+            <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-8 shadow-[0_1px_0_0_rgba(255,255,255,0.05)_inset]">
+              <h3 className="text-xl font-semibold tracking-tight text-white sm:text-2xl">Get in touch</h3>
               <p className="mt-2 text-sm leading-relaxed text-zinc-400">
                 Currently {siteConfig.availability.toLowerCase()} for
                 freelance, full-time roles and fun collaborations.
               </p>
 
-              <div className="group mt-6 flex w-full items-center justify-between gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3.5 text-left transition-colors hover:border-white/20">
+              <div className="group mt-6 flex w-full items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-left shadow-[0_1px_0_0_rgba(255,255,255,0.05)_inset] transition-colors hover:border-white/20">
                 <a
                   href={`mailto:${siteConfig.email}`}
                   className="flex items-center gap-3"
@@ -193,7 +193,7 @@ export default function Contact() {
                     <Mail className="h-5 w-5" />
                   </span>
                   <span>
-                    <span className="block text-[11px] uppercase tracking-wider text-zinc-500">
+                    <span className="block text-xs uppercase tracking-wider text-zinc-500">
                       Email
                     </span>
                     <span className="block text-sm font-medium text-white">
@@ -221,8 +221,8 @@ export default function Contact() {
                 </p>
               )}
 
-              <div className="mt-6 border-t border-white/[0.06] pt-6">
-                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-600">
+              <div className="mt-6 border-t border-white/10 pt-6">
+                <p className="font-mono text-xs uppercase tracking-wider text-zinc-600">
                   Follow me
                 </p>
                 <div className="mt-3 flex items-center gap-2">
@@ -251,11 +251,11 @@ export default function Contact() {
             onSubmit={handleSubmit}
             noValidate
             variants={item}
-            className="relative rounded-2xl border border-white/[0.07] bg-[#0e0e11] p-6 sm:p-8"
+            className="relative rounded-2xl border border-white/10 bg-white/[0.02] p-8 shadow-[0_1px_0_0_rgba(255,255,255,0.05)_inset]"
           >
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="block">
-                <span className="mb-1.5 block text-[13px] font-medium text-zinc-300">
+                <span className="mb-1.5 block text-sm font-medium text-zinc-300">
                   Name
                 </span>
                 <input
@@ -274,7 +274,7 @@ export default function Contact() {
                 )}
               </label>
               <label className="block">
-                <span className="mb-1.5 block text-[13px] font-medium text-zinc-300">
+                <span className="mb-1.5 block text-sm font-medium text-zinc-300">
                   Email
                 </span>
                 <input
@@ -296,7 +296,7 @@ export default function Contact() {
             </div>
 
             <label className="mt-4 block">
-              <span className="mb-1.5 block text-[13px] font-medium text-zinc-300">
+              <span className="mb-1.5 block text-sm font-medium text-zinc-300">
                 Message
               </span>
               <textarea
@@ -335,7 +335,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={sending}
-                className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-[15px] font-medium text-black transition-all hover:bg-zinc-200 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-8"
+                className="group inline-flex w-full items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-medium bg-primary text-black hover:bg-primary/90 transition-colors disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
               >
                 {sending ? (
                   <>

@@ -24,15 +24,15 @@ export default function SectionHeading({
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={`max-w-2xl ${centered ? "mx-auto text-center" : "text-left"}`}
     >
-      <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-400">
+      <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 font-mono text-xs uppercase tracking-wider text-zinc-400">
         <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
         {eyebrow}
       </p>
-      <h2 className="text-gradient mt-4 text-3xl font-semibold tracking-tight text-balance sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1]">
+      <h2 className="text-gradient mt-4 text-3xl font-semibold tracking-tight text-balance sm:text-4xl md:text-5xl">
         {title}
       </h2>
       {description && (
-        <p className="mt-4 text-[15px] leading-relaxed text-zinc-400 sm:text-base">
+        <p className="mt-4 text-base leading-relaxed text-zinc-400">
           {description}
         </p>
       )}

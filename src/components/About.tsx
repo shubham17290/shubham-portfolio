@@ -54,13 +54,13 @@ function StatValue({ value }: { value: string }) {
 
 export default function About() {
   return (
-    <section id="about" className="relative scroll-mt-20 py-20 sm:py-28">
+    <section id="about" className="relative scroll-mt-20 py-24">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="mx-auto max-w-6xl px-5 sm:px-8"
+        className="mx-auto max-w-6xl px-6 sm:px-8"
       >
         <SectionHeading
           eyebrow="About"
@@ -73,14 +73,14 @@ export default function About() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          className="mt-12 grid items-start gap-8 lg:mt-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-12"
+          className="mt-12 grid items-start gap-8 lg:grid-cols-[0.9fr_1.1fr]"
         >
           {/* Left: profile image placeholder */}
           <motion.div
             variants={item}
             className="relative mx-auto w-full max-w-sm lg:mx-0"
           >
-            <div className="relative aspect-square overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02]">
+            <div className="relative aspect-square overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] shadow-[0_1px_0_0_rgba(255,255,255,0.05)_inset]">
               <Image
                 src="/profile.jpg"
                 alt={`${siteConfig.name} — profile photo`}
@@ -95,7 +95,7 @@ export default function About() {
                 className="pointer-events-none absolute inset-0 bg-[radial-gradient(400px_circle_at_50%_0%,rgba(52,211,153,0.12),transparent_70%)]"
               />
             </div>
-            <div className="mt-4 flex items-center justify-between rounded-xl border border-white/[0.07] bg-white/[0.02] px-4 py-3">
+            <div className="mt-4 flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-3 shadow-[0_1px_0_0_rgba(255,255,255,0.05)_inset]">
               <div>
                 <p className="text-sm font-semibold text-white">{siteConfig.name}</p>
                 <p className="text-xs text-zinc-500">
@@ -114,7 +114,7 @@ export default function About() {
             <h3 className="text-xl font-semibold tracking-tight text-white sm:text-2xl">
               I build minimal, premium web experiences.
             </h3>
-            <div className="mt-4 space-y-4 text-[15px] leading-relaxed text-zinc-400">
+            <div className="mt-4 space-y-4 text-base leading-relaxed text-zinc-400">
               {aboutParagraphs.slice(0, 3).map((p) => (
                 <p key={p.slice(0, 24)}>{p}</p>
               ))}
@@ -126,16 +126,16 @@ export default function About() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.2 }}
-              className="mt-8 grid grid-cols-3 gap-3 sm:gap-4"
+              className="mt-8 grid grid-cols-3 gap-6"
             >
               {statCards.map((s) => (
                 <motion.div
                   key={s.label}
                   variants={item}
-                  className="rounded-xl border border-white/[0.07] bg-white/[0.02] px-3 py-5 text-center shadow-[0_10px_40px_-15px_rgba(0,0,0,0.7)] transition-colors hover:border-white/[0.14]"
+                  className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 text-center shadow-[0_1px_0_0_rgba(255,255,255,0.05)_inset] transition-colors hover:border-white/20"
                 >
                   <StatValue value={s.value} />
-                  <p className="mt-1 text-[11px] uppercase tracking-wider text-zinc-500">
+                  <p className="mt-1 text-xs uppercase tracking-wider text-zinc-500">
                     {s.label}
                   </p>
                 </motion.div>
@@ -145,7 +145,7 @@ export default function About() {
             <a
               href={siteConfig.resumeUrl}
               download
-              className="mt-7 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black shadow-[0_10px_40px_-15px_rgba(0,0,0,0.7)] transition-colors hover:bg-zinc-200 active:scale-95"
+              className="mt-7 inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-medium bg-primary text-black hover:bg-primary/90 transition-colors"
             >
               <Download className="h-4 w-4" /> Download CV
             </a>

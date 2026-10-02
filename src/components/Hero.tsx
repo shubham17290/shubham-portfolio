@@ -113,7 +113,7 @@ function TerminalCard() {
         transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
         className="overflow-hidden rounded-2xl border border-white/10 bg-[#0b0b0e]/95 shadow-[0_0_50px_-12px_rgba(255,255,255,0.2)] backdrop-blur"
       >
-        <div className="flex items-center gap-2 border-b border-white/[0.07] px-4 py-3">
+        <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
           <span className="h-3 w-3 rounded-full bg-red-500" />
           <span className="h-3 w-3 rounded-full bg-yellow-500" />
           <span className="h-3 w-3 rounded-full bg-green-500" />
@@ -175,11 +175,11 @@ export default function Hero() {
         aria-hidden
       />
 
-      <div className="relative mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 lg:py-28">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="relative mx-auto w-full max-w-6xl px-6 py-32 sm:px-8">
+        <div className="grid items-center gap-8 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="max-w-3xl">
           <motion.div variants={fadeUp} initial="hidden" animate="show" custom={0}>
-            <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] py-1.5 pl-1.5 pr-4 text-[13px] text-zinc-300 backdrop-blur">
+            <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] py-1.5 pl-1.5 pr-4 text-sm text-zinc-300 backdrop-blur">
               <span className="inline-flex items-center gap-1 rounded-full bg-emerald-400/10 px-2.5 py-0.5 text-xs font-medium text-emerald-300">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
@@ -196,7 +196,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="mt-3 inline-flex max-w-full items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-white/60 sm:text-sm"
+            className="mt-3 inline-flex max-w-full items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-muted sm:text-sm"
           >
             <span className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-emerald-400" />
             <span>{siteConfig.currently}</span>
@@ -208,7 +208,7 @@ export default function Hero() {
               initial="hidden"
               animate="show"
               custom={1}
-              className="mt-7 flex items-center gap-2 font-mono text-[13px] uppercase tracking-[0.22em] text-zinc-500"
+              className="mt-7 flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-zinc-500"
             >
               <MapPin className="h-4 w-4" /> {siteConfig.location}
             </motion.p>
@@ -219,7 +219,7 @@ export default function Hero() {
             initial="hidden"
             animate="show"
             custom={2}
-            className="mt-4 text-[2.75rem] font-semibold leading-[1.02] tracking-[-0.03em] text-balance sm:text-6xl lg:text-7xl"
+            className="mt-4 text-5xl font-bold leading-[1.05] tracking-tight text-balance sm:text-6xl md:text-7xl"
           >
             <span className="text-gradient">Crafting minimal,</span>
             <br />
@@ -248,7 +248,7 @@ export default function Hero() {
             initial="hidden"
             animate="show"
             custom={3}
-            className="mt-7 max-w-xl text-base leading-relaxed text-zinc-400 sm:text-lg"
+            className="mt-7 max-w-xl text-base leading-relaxed text-zinc-400"
           >
             I&apos;m <span className="font-medium text-zinc-100">{siteConfig.name}</span> —{" "}
             <span className="font-medium text-zinc-100">{typedRole}</span>
@@ -272,7 +272,7 @@ export default function Hero() {
             <MagneticButton>
               <a
                 href="#projects"
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-[15px] font-medium text-black transition-all hover:bg-zinc-200 hover:shadow-[0_0_40px_-8px_rgba(255,255,255,0.4)] active:scale-95"
+                className="group inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-medium bg-primary text-black hover:bg-primary/90 transition-colors"
               >
                 View My Work
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -280,7 +280,7 @@ export default function Hero() {
             </MagneticButton>
             <a
               href="#contact"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-7 py-3.5 text-[15px] font-medium text-zinc-100 backdrop-blur transition-colors hover:bg-white/[0.08] active:scale-95"
+              className="inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
             >
               <Sparkles className="h-4 w-4 text-zinc-400" />
               Get in Touch
@@ -289,7 +289,7 @@ export default function Hero() {
               <a
                 href="/resume.pdf"
                 download
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/12 bg-transparent px-7 py-3.5 text-[15px] font-medium text-zinc-300 transition-colors hover:border-white/25 hover:text-white active:scale-95"
+                className="inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-medium hover:bg-white/5 transition-colors"
               >
                 <Download className="h-4 w-4" />
                 Resume

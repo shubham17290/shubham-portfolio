@@ -120,7 +120,7 @@ export default function RootLayout({
       className={`dark ${inter.variable} ${poppins.variable}`}
       suppressHydrationWarning
     >
-      <body className="bg-[var(--color-bg)] font-sans text-[var(--color-text)] antialiased">
+      <body className={`${inter.variable} bg-[var(--color-bg)] font-sans text-[var(--color-text)] antialiased`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
