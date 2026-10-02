@@ -49,9 +49,9 @@ export default function BlogPage() {
                 href={`/blog/${post.slug}`}
                 className="group flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-6 shadow-[0_1px_0_0_rgba(255,255,255,0.05)_inset] transition-all duration-300 hover:-translate-y-1 hover:border-white/20"
               >
-                <h3 className="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+                <h2 className="text-xl font-semibold tracking-tight text-white sm:text-2xl">
                   {post.title}
-                </h3>
+                </h2>
                 {post.excerpt && (
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-zinc-400">
                     {post.excerpt}

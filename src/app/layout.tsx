@@ -1,11 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BackgroundBlobs from "@/components/BackgroundBlobs";
-import ScrollProgress from "@/components/ScrollProgress";
-import LoadingScreen from "@/components/LoadingScreen";
 import EasterEggs from "@/components/EasterEggs";
 import BackToTop from "@/components/BackToTop";
 import LazyWidgets from "@/components/LazyWidgets";
@@ -13,14 +11,8 @@ import LazyWidgets from "@/components/LazyWidgets";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
-  display: "swap"
-});
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
-  display: "swap"
+  display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -117,7 +109,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${inter.variable} ${poppins.variable}`}
+      className={`dark ${inter.variable}`}
       suppressHydrationWarning
     >
       <body className={`${inter.variable} bg-[var(--color-bg)] font-sans text-[var(--color-text)] antialiased`}>
@@ -126,8 +118,6 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         <div className="relative min-h-screen bg-[var(--color-bg)]">
-          <LoadingScreen />
-          <ScrollProgress />
           <BackgroundBlobs />
           <EasterEggs />
           <Navbar />

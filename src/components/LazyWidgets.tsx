@@ -10,10 +10,20 @@ const CommandPalette = dynamic(() => import("@/components/CommandPalette"), {
 const ChatWidget = dynamic(() => import("@/components/ChatWidget"), {
   ssr: false,
 });
+const ScrollProgress = dynamic(() => import("@/components/ScrollProgress"), {
+  ssr: false,
+  loading: () => null,
+});
+const LoadingScreen = dynamic(() => import("@/components/LoadingScreen"), {
+  ssr: false,
+  loading: () => null,
+});
 
 export default function LazyWidgets() {
   return (
     <>
+      <LoadingScreen />
+      <ScrollProgress />
       <CommandPalette />
       <ChatWidget />
     </>

@@ -87,6 +87,7 @@ export default function About() {
                 alt={`${siteConfig.name} — profile photo`}
                 fill
                 sizes="(max-width: 1024px) 100vw, 400px"
+                quality={85}
                 className="object-cover"
                 priority
                 placeholder="blur"

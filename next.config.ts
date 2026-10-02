@@ -1,5 +1,10 @@
 import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
+import bundleAnalyzer from "@next/bundle-analyzer";
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
 
 // 'unsafe-inline' in script-src is needed because Next injects inline
 // bootstrap scripts. Dev additionally needs 'unsafe-eval' for React Refresh.
@@ -55,4 +60,4 @@ const withMDX = createMDX({
   options: {},
 });
 
-export default withMDX(nextConfig);
+export default withBundleAnalyzer(withMDX(nextConfig));

@@ -56,11 +56,11 @@ function useTypewriter(words: string[]) {
 }
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0, y: 16 },
   show: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: 0.1 * i, duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
+    transition: { delay: 0.08 * i, duration: 0.4, ease: "easeOut" as const },
   }),
 };
 
@@ -101,16 +101,14 @@ function TerminalCard() {
       : "";
 
   return (
-    <motion.div
+      <motion.div
       variants={fadeUp}
       initial="hidden"
       animate="show"
-      custom={6}
+      custom={2}
       className="w-full"
     >
-      <motion.div
-        animate={{ y: [0, -8, 0] }}
-        transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+      <div
         className="overflow-hidden rounded-2xl border border-white/10 bg-[#0b0b0e]/95 shadow-[0_0_50px_-12px_rgba(255,255,255,0.2)] backdrop-blur"
       >
         <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
@@ -154,7 +152,7 @@ function TerminalCard() {
             </p>
           )}
         </div>
-      </motion.div>
+      </div>
     </motion.div>
   );
 }
@@ -178,7 +176,7 @@ export default function Hero() {
       <div className="relative mx-auto w-full max-w-6xl px-6 py-32 sm:px-8">
         <div className="grid items-center gap-8 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="max-w-3xl">
-          <motion.div variants={fadeUp} initial="hidden" animate="show" custom={0}>
+          <div>
             <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] py-1.5 pl-1.5 pr-4 text-sm text-zinc-300 backdrop-blur">
               <span className="inline-flex items-center gap-1 rounded-full bg-emerald-400/10 px-2.5 py-0.5 text-xs font-medium text-emerald-300">
                 <span className="relative flex h-2 w-2">
@@ -190,35 +188,28 @@ export default function Hero() {
               <span className="hidden sm:inline">{siteConfig.availability} — let&apos;s build</span>
               <span className="sm:hidden">Open to work</span>
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
+          <div
             className="mt-3 inline-flex max-w-full items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-muted sm:text-sm"
           >
             <span className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-emerald-400" />
             <span>{siteConfig.currently}</span>
-          </motion.div>
+          </div>
 
           {siteConfig.location ? (
-            <motion.p
-              variants={fadeUp}
-              initial="hidden"
-              animate="show"
-              custom={1}
+            <p
               className="mt-7 flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-zinc-500"
             >
               <MapPin className="h-4 w-4" /> {siteConfig.location}
-            </motion.p>
+            </p>
           ) : null}
 
           <motion.h1
             variants={fadeUp}
             initial="hidden"
             animate="show"
-            custom={2}
+            custom={0}
             className="mt-4 text-5xl font-bold leading-[1.05] tracking-tight text-balance sm:text-6xl md:text-7xl"
           >
             <span className="text-gradient">Crafting minimal,</span>
@@ -247,7 +238,7 @@ export default function Hero() {
             variants={fadeUp}
             initial="hidden"
             animate="show"
-            custom={3}
+            custom={1}
             className="mt-7 max-w-xl text-base leading-relaxed text-zinc-400"
           >
             I&apos;m <span className="font-medium text-zinc-100">{siteConfig.name}</span> —{" "}
@@ -266,7 +257,7 @@ export default function Hero() {
             variants={fadeUp}
             initial="hidden"
             animate="show"
-            custom={4}
+            custom={2}
             className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
           >
             <MagneticButton>
@@ -297,11 +288,7 @@ export default function Hero() {
             </MagneticButton>
           </motion.div>
 
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={5}
+          <div
             className="mt-10 flex items-center gap-3"
           >
             <div className="flex items-center gap-2">
@@ -310,17 +297,16 @@ export default function Hero() {
                 { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
                 { icon: Twitter, href: "https://x.com", label: "Twitter" },
               ].map(({ icon: Icon, href, label }) => (
-                <motion.a
+                <a
                   key={label}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  whileHover={{ y: -3, transition: { duration: 0.15, repeat: 1, repeatType: "reverse" } }}
                   className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-zinc-400 transition-colors hover:border-white/20 hover:text-white"
                 >
                   <Icon className="h-[18px] w-[18px]" />
-                </motion.a>
+                </a>
               ))}
             </div>
             <span className="h-px w-12 bg-white/10" />
@@ -330,28 +316,22 @@ export default function Hero() {
             >
               {siteConfig.email}
             </a>
-          </motion.div>
+          </div>
           </div>
           <TerminalCard />
         </div>
 
-        {/* scroll hint */}
-        <motion.a
+        {/* scroll hint — static, CSS-only bounce (no framer-motion) */}
+        <a
           href="#about"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
           className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-zinc-600 transition-colors hover:text-zinc-300 md:flex"
           aria-label="Scroll to about"
         >
           <span className="font-mono text-[11px] uppercase tracking-[0.2em]">Scroll</span>
-          <motion.span
-            animate={{ y: [0, 6, 0] }}
-            transition={{ repeat: Infinity, duration: 1.8 }}
-          >
+          <span className="animate-bounce">
             <ArrowDown className="h-4 w-4" />
-          </motion.span>
-        </motion.a>
+          </span>
+        </a>
       </div>
     </section>
   );
