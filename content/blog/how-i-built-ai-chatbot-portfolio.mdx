@@ -1,0 +1,83 @@
+---
+title: "How I Built an AI Chatbot for My Portfolio"
+date: "2026-10-02"
+excerpt: "Why I decided to add an AI chatbot to my portfolio and what I learned while connecting a modern frontend with a generative AI model."
+tags: ["AI", "Next.js", "Gemini", "Portfolio"]
+---
+
+## Why I wanted an AI chatbot in my portfolio
+
+When I started working on my portfolio, I didn't want it to be just another website with my name, skills, projects, and contact information.
+
+A portfolio should tell people what I can build.
+
+But I also wanted it to demonstrate something more practical — how I can work with modern AI technologies and integrate them into a real application.
+
+That's why I decided to add an AI chatbot to my portfolio.
+
+The idea was simple:
+
+Instead of making visitors search through different sections of my portfolio, I wanted to give them another way to interact with it.
+
+They could ask questions about my projects, skills, experience, or the technologies I work with.
+
+That small idea became one of the more interesting parts of my portfolio.
+
+---
+
+## What I wanted the chatbot to do
+
+I didn't want to build a chatbot just for the sake of having a chatbot.
+
+The chatbot needed to have a purpose.
+
+My basic goals were:
+
+- Keep the interaction simple
+- Make the chatbot feel like a natural part of the portfolio
+- Connect it with a generative AI model
+- Stream responses instead of making users wait for the complete response
+- Keep the UI clean and responsive
+- Make it useful for understanding my work
+
+The important part for me was the integration.
+
+I wanted to understand what actually happens between a user's message, the application, the AI model, and the response shown on the screen.
+
+---
+
+## The technology I used
+
+For the application, I worked with:
+
+- Next.js
+- React
+- TypeScript
+- Vercel AI SDK
+- Google Gemini
+- Tailwind CSS
+
+Next.js gave me the application structure and API capabilities, while the AI SDK helped simplify the communication between the application and the language model.
+
+Gemini handled the actual generative AI part.
+
+---
+
+## How the basic flow works
+
+The overall flow is fairly simple:
+
+```text
+User
+  ↓
+Chat Interface
+  ↓
+Next.js API
+  ↓
+AI SDK
+  ↓
+Google Gemini
+  ↓
+Streaming Response
+  ↓
+Chat Interface

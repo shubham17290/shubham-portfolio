@@ -1,0 +1,117 @@
+---
+# 3. `why-nextjs-for-projects.mdx`
+
+Ye article tumhare **PrepForge + FitXGuide + portfolio type projects** ke experience se naturally connect karega.
+
+```mdx
+---
+
+title: "Why I Choose Next.js for My Projects"
+date: "2026-10-02"
+excerpt: "Why Next.js has become one of my preferred choices for building modern, scalable web applications."
+tags: ["Next.js", "React", "TypeScript", "Web Development"]
+
+---
+
+## Why I started using Next.js
+
+When I first started learning web development, I mainly focused on individual technologies.
+
+HTML for structure.
+
+CSS for styling.
+
+JavaScript for interaction.
+
+Then I moved into React and started building larger interfaces.
+
+As my projects became more complex, I started asking a different question:
+
+**How should I structure a complete application?**
+
+That's where Next.js became interesting to me.
+
+Instead of thinking about only the frontend, Next.js gave me a framework for building a complete modern web application.
+
+---
+
+## What I like about Next.js
+
+There are many reasons I use Next.js in my projects, but the biggest one is structure.
+
+When a project grows, having a clear structure becomes important.
+
+Next.js provides features such as:
+
+- File-based routing
+- React Server Components
+- Server-side capabilities
+- API/backend integration
+- Built-in optimization features
+- App Router
+- TypeScript support
+- Flexible rendering strategies
+
+This means I can start with a relatively simple application and gradually build it into something much larger.
+
+---
+
+## Next.js and TypeScript
+
+I also prefer using Next.js with TypeScript.
+
+When an application has multiple components, API requests, database models, and shared data structures, type safety becomes increasingly useful.
+
+For example, instead of passing arbitrary objects around my application, I can define what the data should look like.
+
+That helps catch certain mistakes during development instead of discovering them later at runtime.
+
+For me, TypeScript has become especially useful as my projects have become larger.
+
+---
+
+## How I use Next.js in my projects
+
+I have used Next.js while working on projects such as **PrepForge** and my fitness application.
+
+For example, in PrepForge, the frontend needs to handle things like:
+
+- Question browsing
+- Practice sessions
+- Navigation
+- Answer selection
+- Results
+- Analytics
+- User interactions
+
+These aren't just individual pages.
+
+They are parts of one larger application.
+
+Next.js gives me a structured environment in which I can build those different pieces.
+
+---
+
+## Next.js doesn't mean everything belongs in the frontend
+
+One thing I learned while building full-stack applications is that choosing Next.js does not mean putting every piece of logic into the frontend.
+
+For larger applications, I prefer separating responsibilities.
+
+For example, my PrepForge architecture follows a structure similar to:
+
+```text
+Next.js Frontend
+       ↓
+REST API
+       ↓
+Express + Node.js
+       ↓
+Service / Domain Layer
+       ↓
+Repository Layer
+       ↓
+Prisma
+       ↓
+PostgreSQL
+```
