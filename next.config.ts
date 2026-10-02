@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import createMDX from "@next/mdx";
 
 // 'unsafe-inline' in script-src is needed because Next injects inline
 // bootstrap scripts. Dev additionally needs 'unsafe-eval' for React Refresh.
@@ -38,6 +39,7 @@ const securityHeaders = [
   },
 ];
 const nextConfig: NextConfig = {
+  pageExtensions: ["ts", "tsx", "md", "mdx"],
   async headers() {
     return [
       {
@@ -48,4 +50,9 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+const withMDX = createMDX({
+  extension: /\.mdx?$/,
+  options: {},
+});
+
+export default withMDX(nextConfig);
