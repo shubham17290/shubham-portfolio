@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight, Search } from "lucide-react";
 import { navLinks, siteConfig } from "@/lib/data";
@@ -84,16 +85,29 @@ export default function Navbar() {
           <ul className="hidden items-center gap-1 md:flex">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <a
-                  href={link.href}
-                  className="group relative rounded-full px-4 py-2 text-sm text-zinc-400 transition-colors hover:bg-white/[0.06] hover:text-white"
-                >
-                  {link.label}
-                  <span
-                    aria-hidden
-                    className="absolute bottom-1 left-4 right-4 h-px origin-left scale-x-0 bg-white/80 transition-transform duration-300 group-hover:scale-x-100"
-                  />
-                </a>
+                {link.href.startsWith("/") ? (
+                  <Link
+                    href={link.href}
+                    className="group relative rounded-full px-4 py-2 text-sm text-zinc-400 transition-colors hover:bg-white/[0.06] hover:text-white"
+                  >
+                    {link.label}
+                    <span
+                      aria-hidden
+                      className="absolute bottom-1 left-4 right-4 h-px origin-left scale-x-0 bg-white/80 transition-transform duration-300 group-hover:scale-x-100"
+                    />
+                  </Link>
+                ) : (
+                  <a
+                    href={link.href}
+                    className="group relative rounded-full px-4 py-2 text-sm text-zinc-400 transition-colors hover:bg-white/[0.06] hover:text-white"
+                  >
+                    {link.label}
+                    <span
+                      aria-hidden
+                      className="absolute bottom-1 left-4 right-4 h-px origin-left scale-x-0 bg-white/80 transition-transform duration-300 group-hover:scale-x-100"
+                    />
+                  </a>
+                )}
               </li>
             ))}
           </ul>
@@ -153,16 +167,29 @@ export default function Navbar() {
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.1 + i * 0.07 }}
                 >
-                  <a
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className="block border-b border-white/10 py-4 text-2xl font-medium tracking-tight text-zinc-100"
-                  >
-                    <span className="mr-3 font-mono text-sm text-zinc-600">
-                      0{i + 1}
-                    </span>
-                    {link.label}
-                  </a>
+                  {link.href.startsWith("/") ? (
+                    <Link
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      className="block border-b border-white/10 py-4 text-2xl font-medium tracking-tight text-zinc-100"
+                    >
+                      <span className="mr-3 font-mono text-sm text-zinc-600">
+                        0{i + 1}
+                      </span>
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      className="block border-b border-white/10 py-4 text-2xl font-medium tracking-tight text-zinc-100"
+                    >
+                      <span className="mr-3 font-mono text-sm text-zinc-600">
+                        0{i + 1}
+                      </span>
+                      {link.label}
+                    </a>
+                  )}
                 </motion.li>
               ))}
               <li className="pt-6">

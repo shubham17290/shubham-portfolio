@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Command } from "cmdk";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -9,6 +10,7 @@ import {
   Code2,
   FolderGit2,
   Mail,
+  Newspaper,
   Github,
   Linkedin,
   Twitter,
@@ -26,6 +28,7 @@ const navigateIcons: Record<string, typeof Home> = {
   "#skills": Code2,
   "#projects": FolderGit2,
   "#contact": Mail,
+  "/blog": Newspaper,
 };
 
 const socialEntries = [
@@ -44,6 +47,7 @@ function scrollToSection(href: string) {
 
 export default function CommandPalette() {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   const close = useCallback(() => setOpen(false), []);
 
@@ -76,7 +80,12 @@ export default function CommandPalette() {
 
   const runNavigate = (href: string) => {
     close();
-    // Wait for palette exit before scrolling
+    if (href.startsWith("/")) {
+      // Pathname route (e.g. /blog) — client-side navigation
+      setTimeout(() => router.push(href), 80);
+      return;
+    }
+    // Hash anchor — smooth scroll on the home page
     setTimeout(() => scrollToSection(href), 80);
   };
 
