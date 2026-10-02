@@ -1,49 +1,26 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, type Variants, useInView, animate } from "framer-motion";
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import profileImage from "../../public/profile.webp";
 import { Download } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import { aboutParagraphs, stats, siteConfig } from "@/lib/data";
+import { useInViewClass } from "@/hooks/useInViewClass";
+import { useCountUp, useInViewState } from "@/hooks/useCountUp";
 
 // 3 stat cards as per spec: years, projects, clients
 const statCards = stats.slice(0, 3);
 
-const container: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { staggerChildren: 0.12, duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-  },
-};
-
-const item: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
-  },
-};
+const stagger = (i: number): CSSProperties =>
+  ({
+    "--reveal-delay": `${i * 80}ms`,
+  }) as CSSProperties;
 
 function StatValue({ value }: { value: string }) {
-  const ref = useRef<HTMLParagraphElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.5 });
-  const [display, setDisplay] = useState(0);
+  const { ref, inView } = useInViewState<HTMLParagraphElement>();
   const numeric = parseInt(value, 10);
-
-  useEffect(() => {
-    if (!inView || Number.isNaN(numeric)) return;
-    const controls = animate(0, numeric, {
-      duration: 1.6,
-      ease: [0.22, 1, 0.36, 1],
-      onUpdate: (v) => setDisplay(Math.round(v)),
-    });
-    return () => controls.stop();
-  }, [inView, numeric]);
+  const display = useCountUp(Number.isNaN(numeric) ? 0 : numeric, inView);
 
   if (Number.isNaN(numeric)) return <span ref={ref}>{value}</span>;
   return (
@@ -54,32 +31,27 @@ function StatValue({ value }: { value: string }) {
 }
 
 export default function About() {
+  const sectionRef = useInViewClass<HTMLDivElement>();
+  const gridRef = useInViewClass<HTMLDivElement>();
+  const statsRef = useInViewClass<HTMLDivElement>();
+
   return (
     <section id="about" className="relative scroll-mt-20 py-24">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="mx-auto max-w-6xl px-6 sm:px-8"
-      >
+      <div ref={sectionRef} className="reveal mx-auto max-w-6xl px-6 sm:px-8">
         <SectionHeading
           eyebrow="About"
           title="A little about me"
           description="Developer with a designer eye — I care about speed, clarity, and the details."
         />
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          className="mt-12 grid items-start gap-8 lg:grid-cols-[0.9fr_1.1fr]"
+        <div
+          ref={gridRef}
+          className="reveal-group mt-12 grid items-start gap-8 lg:grid-cols-[0.9fr_1.1fr]"
         >
           {/* Left: profile image placeholder */}
-          <motion.div
-            variants={item}
-            className="relative mx-auto w-full max-w-sm lg:mx-0"
+          <div
+            style={stagger(0)}
+            className="reveal-child relative mx-auto w-full max-w-sm lg:mx-0"
           >
             <div className="relative aspect-square overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] shadow-[0_1px_0_0_rgba(255,255,255,0.05)_inset]">
               <Image
@@ -110,10 +82,10 @@ export default function About() {
                 Open
               </span>
             </div>
-          </motion.div>
+          </div>
 
           {/* Right: about text */}
-          <motion.div variants={item}>
+          <div style={stagger(1)} className="reveal-child">
             <h3 className="text-xl font-semibold tracking-tight text-white sm:text-2xl">
               I build minimal, premium web experiences.
             </h3>
@@ -124,26 +96,23 @@ export default function About() {
             </div>
 
             {/* Stat cards with stagger */}
-            <motion.div
-              variants={container}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.2 }}
-              className="mt-8 grid grid-cols-3 gap-6"
+            <div
+              ref={statsRef}
+              className="reveal-group mt-8 grid grid-cols-3 gap-6"
             >
-              {statCards.map((s) => (
-                <motion.div
+              {statCards.map((s, i) => (
+                <div
                   key={s.label}
-                  variants={item}
-                  className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 text-center shadow-[0_1px_0_0_rgba(255,255,255,0.05)_inset] transition-colors hover:border-white/20"
+                  style={stagger(i)}
+                  className="reveal-child rounded-2xl border border-white/10 bg-white/[0.02] p-6 text-center shadow-[0_1px_0_0_rgba(255,255,255,0.05)_inset] transition-colors hover:border-white/20"
                 >
                   <StatValue value={s.value} />
                   <p className="mt-1 text-xs uppercase tracking-wider text-zinc-500">
                     {s.label}
                   </p>
-                </motion.div>
+                </div>
               ))}
-            </motion.div>
+            </div>
 
             <a
               href={siteConfig.resumeUrl}
@@ -152,9 +121,9 @@ export default function About() {
             >
               <Download className="h-4 w-4" /> Download CV
             </a>
-          </motion.div>
-        </motion.div>
-      </motion.div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

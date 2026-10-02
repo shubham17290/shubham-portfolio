@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, type Variants } from "framer-motion";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import {
   Mail,
   Copy,
@@ -21,6 +20,7 @@ import {
 import SectionHeading from "./SectionHeading";
 import { siteConfig, socials } from "@/lib/data";
 import MagneticButton from "@/components/MagneticButton";
+import { useInViewClass } from "@/hooks/useInViewClass";
 
 const socialIcons: Record<string, LucideIcon> = {
   Github,
@@ -54,23 +54,10 @@ const inputClass = (invalid: boolean) =>
       : "border-white/10 focus:border-white/30"
   }`;
 
-const container: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { staggerChildren: 0.12, delayChildren: 0.1 },
-  },
-};
-
-const item: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
-  },
-};
+const stagger = (i: number): CSSProperties =>
+  ({
+    "--reveal-delay": `${i * 80}ms`,
+  }) as CSSProperties;
 
 export default function Contact() {
   const [name, setName] = useState("");
@@ -81,17 +68,25 @@ export default function Contact() {
   const [sending, setSending] = useState(false);
   const [copied, setCopied] = useState(false);
   const [toast, setToast] = useState<Toast>(null);
+  const [toastLeaving, setToastLeaving] = useState(false);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const toastHideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const sectionRef = useInViewClass<HTMLDivElement>();
+  const gridRef = useInViewClass<HTMLDivElement>();
 
   const showToast = (next: NonNullable<Toast>) => {
-    setToast(next);
     if (toastTimer.current) clearTimeout(toastTimer.current);
-    toastTimer.current = setTimeout(() => setToast(null), 4000);
+    if (toastHideTimer.current) clearTimeout(toastHideTimer.current);
+    setToastLeaving(false);
+    setToast(next);
+    toastTimer.current = setTimeout(() => setToastLeaving(true), 4000);
+    toastHideTimer.current = setTimeout(() => setToast(null), 4250);
   };
 
   useEffect(() => {
     return () => {
       if (toastTimer.current) clearTimeout(toastTimer.current);
+      if (toastHideTimer.current) clearTimeout(toastHideTimer.current);
     };
   }, []);
 
@@ -155,28 +150,19 @@ export default function Contact() {
       id="contact"
       className="relative scroll-mt-20 border-t border-white/10 bg-white/[0.01] py-24"
     >
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="mx-auto max-w-6xl px-6 sm:px-8"
-      >
+      <div ref={sectionRef} className="reveal mx-auto max-w-6xl px-6 sm:px-8">
         <SectionHeading
           eyebrow="Contact"
           title="Let's build something great together"
           description="Fill out the form and I'll get back to you as soon as I can."
         />
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          className="mt-12 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]"
+        <div
+          ref={gridRef}
+          className="reveal-group mt-12 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]"
         >
           {/* Left: heading + email + socials */}
-          <motion.div variants={item} className="flex flex-col gap-4">
+          <div style={stagger(0)} className="reveal-child flex flex-col gap-4">
             <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-8 shadow-[0_1px_0_0_rgba(255,255,255,0.05)_inset]">
               <h3 className="text-xl font-semibold tracking-tight text-white sm:text-2xl">Get in touch</h3>
               <p className="mt-2 text-sm leading-relaxed text-zinc-400">
@@ -244,14 +230,14 @@ export default function Contact() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Right: form */}
-          <motion.form
+          <form
             onSubmit={handleSubmit}
             noValidate
-            variants={item}
-            className="relative rounded-2xl border border-white/10 bg-white/[0.02] p-8 shadow-[0_1px_0_0_rgba(255,255,255,0.05)_inset]"
+            style={stagger(1)}
+            className="reveal-child relative rounded-2xl border border-white/10 bg-white/[0.02] p-8 shadow-[0_1px_0_0_rgba(255,255,255,0.05)_inset]"
           >
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="block">
@@ -349,34 +335,30 @@ export default function Contact() {
                 )}
               </button>
             </MagneticButton>
-          </motion.form>
-        </motion.div>
-      </motion.div>
+          </form>
+        </div>
+      </div>
 
       {/* Toast */}
-      <AnimatePresence>
-        {toast && (
-          <motion.div
-            initial={{ opacity: 0, y: 24, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 12, scale: 0.98 }}
-            transition={{ duration: 0.25 }}
-            role="status"
-            className={`fixed bottom-6 left-1/2 z-[60] flex -translate-x-1/2 items-center gap-2.5 rounded-full border px-5 py-3 text-sm font-medium shadow-2xl backdrop-blur-xl ${
-              toast.type === "success"
-                ? "border-emerald-400/30 bg-emerald-950/90 text-emerald-100"
-                : "border-red-400/30 bg-red-950/90 text-red-100"
-            }`}
-          >
-            {toast.type === "success" ? (
-              <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-            ) : (
-              <AlertCircle className="h-4 w-4 text-red-400" />
-            )}
-            {toast.message}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {toast && (
+        <div
+          role="status"
+          className={`pop-in fixed bottom-6 left-1/2 z-[60] flex -translate-x-1/2 items-center gap-2.5 rounded-full border px-5 py-3 text-sm font-medium shadow-2xl backdrop-blur-xl transition-opacity duration-200 ${
+            toastLeaving ? "opacity-0" : "opacity-100"
+          } ${
+            toast.type === "success"
+              ? "border-emerald-400/30 bg-emerald-950/90 text-emerald-100"
+              : "border-red-400/30 bg-red-950/90 text-red-100"
+          }`}
+        >
+          {toast.type === "success" ? (
+            <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+          ) : (
+            <AlertCircle className="h-4 w-4 text-red-400" />
+          )}
+          {toast.message}
+        </div>
+      )}
     </section>
   );
 }

@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight, Search } from "lucide-react";
 import { navLinks, siteConfig } from "@/lib/data";
 
@@ -47,11 +46,8 @@ export default function Navbar() {
 
   return (
     <>
-      <motion.header
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={`sticky top-0 z-50 transition-all duration-300 ${
+      <header
+        className={`load-in-down sticky top-0 z-50 transition-all duration-300 ${
           scrolled
             ? "border-b border-white/10 bg-[var(--bg)]/80 backdrop-blur-xl"
             : "border-b border-transparent bg-transparent"
@@ -66,19 +62,13 @@ export default function Navbar() {
               {siteConfig.name}
               <span className="text-zinc-400">.dev</span>
             </span>
-            <AnimatePresence>
-              {logoMsg && (
-                <motion.span
-                  initial={{ opacity: 0, y: -4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute left-0 top-full mt-2 whitespace-nowrap rounded-full border border-white/10 bg-[#0e0e11] px-3.5 py-1.5 text-xs text-zinc-300 shadow-xl"
-                >
-                  You really like clicking, huh? 😄
-                </motion.span>
-              )}
-            </AnimatePresence>
+            {logoMsg && (
+              <span
+                className="pop-in absolute left-0 top-full mt-2 whitespace-nowrap rounded-full border border-white/10 bg-[#0e0e11] px-3.5 py-1.5 text-xs text-zinc-300 shadow-xl"
+              >
+                You really like clicking, huh? 😄
+              </span>
+            )}
           </a>
 
           {/* Desktop */}
@@ -142,31 +132,28 @@ export default function Navbar() {
             </button>
           </div>
         </nav>
-      </motion.header>
+      </header>
 
-      {/* Mobile menu */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-[#09090b]/95 backdrop-blur-xl md:hidden"
-          >
-            <motion.ul
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.1, duration: 0.4 }}
-              className="flex h-full flex-col justify-center gap-2 px-8 pt-16"
+      {/* Mobile menu — stays mounted for CSS enter/exit transitions */}
+      <div
+        aria-hidden={!open}
+        className={`fixed inset-0 z-40 bg-[#09090b]/95 backdrop-blur-xl transition-[opacity,visibility] duration-200 md:hidden ${
+          open ? "visible opacity-100" : "invisible pointer-events-none opacity-0"
+        }`}
+      >
+        <ul
+          className={`flex h-full flex-col justify-center gap-2 px-8 pt-16 transition-all delay-100 duration-300 ${
+            open ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
+          }`}
+        >
+          {navLinks.map((link, i) => (
+            <li
+              key={link.href}
+              style={{ transitionDelay: open ? `${100 + i * 70}ms` : "0ms" }}
+              className={`transition-all duration-300 ${
+                open ? "translate-x-0 opacity-100" : "-translate-x-5 opacity-0"
+              }`}
             >
-              {navLinks.map((link, i) => (
-                <motion.li
-                  key={link.href}
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.1 + i * 0.07 }}
-                >
                   {link.href.startsWith("/") ? (
                     <Link
                       href={link.href}
@@ -190,7 +177,7 @@ export default function Navbar() {
                       {link.label}
                     </a>
                   )}
-                </motion.li>
+                </li>
               ))}
               <li className="pt-6">
                 <a
@@ -201,10 +188,8 @@ export default function Navbar() {
                   Let&apos;s Talk <ArrowUpRight className="h-5 w-5" />
                 </a>
               </li>
-            </motion.ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </ul>
+          </div>
     </>
   );
 }

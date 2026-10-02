@@ -18,6 +18,9 @@ const LoadingScreen = dynamic(() => import("@/components/LoadingScreen"), {
   ssr: false,
   loading: () => null,
 });
+const EasterEggs = dynamic(() => import("@/components/EasterEggs"), {
+  ssr: false,
+});
 
 export default function LazyWidgets() {
   return (
@@ -26,6 +29,7 @@ export default function LazyWidgets() {
       <ScrollProgress />
       <CommandPalette />
       <ChatWidget />
+      <EasterEggs />
     </>
   );
 }

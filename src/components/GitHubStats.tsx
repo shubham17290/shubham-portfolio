@@ -1,45 +1,22 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, type Variants, useInView, animate } from "framer-motion";
+import { useEffect, useState, type CSSProperties } from "react";
 import { GitHubCalendar } from "react-github-calendar";
 import { BookMarked, Star, Flame } from "lucide-react";
 import SectionHeading from "./SectionHeading";
+import { useInViewClass } from "@/hooks/useInViewClass";
+import { useCountUp, useInViewState } from "@/hooks/useCountUp";
 
 const USERNAME = "shubham17290";
 
-const container: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { staggerChildren: 0.12, delayChildren: 0.1 },
-  },
-};
-
-const item: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
-  },
-};
+const stagger = (i: number): CSSProperties =>
+  ({
+    "--reveal-delay": `${i * 80}ms`,
+  }) as CSSProperties;
 
 function StatNumber({ value }: { value: number }) {
-  const ref = useRef<HTMLParagraphElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.5 });
-  const [display, setDisplay] = useState(0);
-
-  useEffect(() => {
-    if (!inView) return;
-    const controls = animate(0, value, {
-      duration: 1.6,
-      ease: [0.22, 1, 0.36, 1],
-      onUpdate: (v) => setDisplay(Math.round(v)),
-    });
-    return () => controls.stop();
-  }, [inView, value]);
+  const { ref, inView } = useInViewState<HTMLParagraphElement>();
+  const display = useCountUp(value, inView);
 
   return (
     <p ref={ref} className="text-2xl font-semibold text-white sm:text-3xl">
@@ -80,6 +57,9 @@ export default function GitHubStats() {
   const [stars, setStars] = useState(0);
   const [streak, setStreak] = useState(0);
   const [loaded, setLoaded] = useState(false);
+  const sectionRef = useInViewClass<HTMLDivElement>();
+  const cardsRef = useInViewClass<HTMLDivElement>();
+  const calRef = useInViewClass<HTMLDivElement>();
 
   useEffect(() => setMounted(true), []);
 
@@ -137,31 +117,22 @@ export default function GitHubStats() {
       id="github"
       className="relative scroll-mt-20 border-t border-white/[0.06] bg-white/[0.01] py-20 sm:py-28"
     >
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="mx-auto max-w-6xl px-5 sm:px-8"
-      >
+      <div ref={sectionRef} className="reveal mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeading
           eyebrow="GitHub"
           title="Contribution graph"
           description="Live activity pulled from the GitHub API with a dark theme to match the site."
         />
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          className="mt-12 grid gap-5 sm:grid-cols-3 lg:mt-16"
+        <div
+          ref={cardsRef}
+          className="reveal-group mt-12 grid gap-5 sm:grid-cols-3 lg:mt-16"
         >
-          {cards.map(({ label, value, Icon, suffix }) => (
-            <motion.div
+          {cards.map(({ label, value, Icon, suffix }, i) => (
+            <div
               key={label}
-              variants={item}
-              className="rounded-2xl border border-white/[0.07] bg-[#0e0e11] p-6 text-center"
+              style={stagger(i)}
+              className="reveal-child rounded-2xl border border-white/[0.07] bg-[#0e0e11] p-6 text-center"
             >
               <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.05] text-zinc-200">
                 <Icon className="h-5 w-5" />
@@ -184,16 +155,13 @@ export default function GitHubStats() {
               <p className="mt-1 text-[11px] uppercase tracking-wider text-zinc-500">
                 {label}
               </p>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
-        <motion.div
-          variants={item}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          className="mt-5 overflow-x-auto rounded-2xl border border-white/[0.07] bg-[#0e0e11] p-6"
+        <div
+          ref={calRef}
+          className="reveal mt-5 overflow-x-auto rounded-2xl border border-white/[0.07] bg-[#0e0e11] p-6"
         >
           <GitHubCalendar
             username={USERNAME}
@@ -202,8 +170,8 @@ export default function GitHubStats() {
             blockMargin={4}
             fontSize={12}
           />
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
 }

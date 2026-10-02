@@ -1,255 +1,75 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useMotionValue,
-  useSpring,
-  type Variants,
-} from "framer-motion";
-import { Github, ArrowUpRight, Star, FolderGit2, X } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import { Github, ArrowUpRight } from "lucide-react";
 import SectionHeading from "./SectionHeading";
-import { projects, type Project } from "@/lib/data";
+import { useInViewClass } from "@/hooks/useInViewClass";
+import { useInViewState } from "@/hooks/useCountUp";
 
-const container: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { staggerChildren: 0.12, delayChildren: 0.1 },
-  },
-};
+// Interactive grid (tilt + modal) loads client-only after scroll into view,
+// keeping framer-motion out of the initial bundle.
+const ProjectShowcase = dynamic(() => import("@/components/ProjectShowcase"), {
+  ssr: false,
+  loading: () => <ProjectGridSkeleton />,
+});
 
-const item: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
-  },
-};
-
-const badgeContainer: Variants = {
-  rest: { transition: { staggerChildren: 0.02 } },
-  hover: { transition: { staggerChildren: 0.06 } },
-};
-
-const badgeItem: Variants = {
-  rest: { opacity: 0.75, y: 0 },
-  hover: {
-    opacity: 1,
-    y: -2,
-    transition: { duration: 0.2 },
-  },
-};
-
-function ProjectCard({
-  project,
-  onSelect,
-}: {
-  project: Project;
-  onSelect: (p: Project) => void;
-}) {
-  const ref = useRef<HTMLElement>(null);
-  const rotateX = useMotionValue(0);
-  const rotateY = useMotionValue(0);
-  const springRX = useSpring(rotateX, { stiffness: 150, damping: 18 });
-  const springRY = useSpring(rotateY, { stiffness: 150, damping: 18 });
-  const [glow, setGlow] = useState({ x: 50, y: 50, opacity: 0 });
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width - 0.5;
-    const py = (e.clientY - rect.top) / rect.height - 0.5;
-    rotateX.set(-py * 10);
-    rotateY.set(px * 10);
-    setGlow({
-      x: ((e.clientX - rect.left) / rect.width) * 100,
-      y: ((e.clientY - rect.top) / rect.height) * 100,
-      opacity: 1,
-    });
-  };
-
-  const handleMouseLeave = () => {
-    rotateX.set(0);
-    rotateY.set(0);
-    setGlow((g) => ({ ...g, opacity: 0 }));
-  };
-
+function ProjectGridSkeleton() {
   return (
-    <motion.article
-      variants={item}
-      style={{
-        rotateX: springRX,
-        rotateY: springRY,
-        transformPerspective: 1000,
-      }}
-      whileHover={{ y: -6, scale: 1.02 }}
-      transition={{ type: "spring", stiffness: 300, damping: 22 }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      onClick={() => onSelect(project)}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") onSelect(project);
-      }}
-      tabIndex={0}
-      role="button"
-      aria-label={`Open ${project.title} details`}
-      className="group flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] shadow-[0_1px_0_0_rgba(255,255,255,0.05)_inset] transition-colors hover:border-white/20 active:scale-95"
-    >
-      <div ref={ref as React.RefObject<HTMLDivElement>} className="contents">
-        {/* Thumbnail placeholder */}
-        <div className="relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-zinc-800 via-zinc-900 to-black">
-          <div className="bg-grid absolute inset-0 opacity-60 transition-transform duration-500 group-hover:scale-105" />
-          {/* radial glow that follows cursor */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 transition-opacity duration-300"
-            style={{
-              opacity: glow.opacity,
-              background: `radial-gradient(300px circle at ${glow.x}% ${glow.y}%, rgba(52,211,153,0.18), transparent 70%)`,
-            }}
-          />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] backdrop-blur transition-transform group-hover:scale-110">
-              <FolderGit2 className="h-6 w-6 text-zinc-300" />
-            </span>
-          </div>
-          {project.featured && (
-            <span className="absolute left-4 top-4 inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-1 text-xs font-medium uppercase tracking-wider text-black">
-              <Star className="h-3 w-3 fill-black" /> Featured
-            </span>
-          )}
-          <span className="absolute right-4 top-4 rounded-full border border-white/10 bg-black/60 px-2.5 py-1 font-mono text-xs uppercase tracking-wider text-zinc-400 backdrop-blur">
-            {project.year}
-          </span>
-          {/* hover overlay */}
-          <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/20" />
-        </div>
-
-        <div className="flex flex-1 flex-col p-6">
-          <h3 className="text-xl font-semibold tracking-tight text-white transition-colors group-hover:text-zinc-100 sm:text-2xl">
-            {project.title}
-          </h3>
-          <p className="mt-2 flex-1 text-sm leading-relaxed text-zinc-400">
-            {project.description}
-          </p>
-
-          <motion.div
-            variants={badgeContainer}
-            initial="rest"
-            whileHover="hover"
-            className="mt-4 flex flex-wrap gap-1.5"
-          >
-            {project.tags.map((tag) => (
-              <motion.span
-                key={tag}
-                variants={badgeItem}
-                className="rounded-md bg-white/[0.06] px-2 py-1 font-mono text-xs text-zinc-400"
-              >
-                {tag}
-              </motion.span>
-            ))}
-          </motion.div>
-
-          <div
-            className="mt-5 flex items-center gap-2 border-t border-white/10 pt-5"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
-            >
-              <Github className="h-4 w-4" /> Code
-            </a>
-            {project.liveUrl ? (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-medium bg-primary text-black hover:bg-primary/90 transition-colors"
-              >
-                Live Demo <ArrowUpRight className="h-4 w-4" />
-              </a>
-            ) : (
-              <span className="inline-flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-medium bg-primary text-black hover:bg-primary/90 transition-colors">
-                View Details <ArrowUpRight className="h-4 w-4" />
-              </span>
-            )}
+    <div aria-hidden className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {[0, 1, 2].map((i) => (
+        <div
+          key={i}
+          className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]"
+        >
+          <div className="aspect-[16/9] animate-pulse bg-white/[0.04]" />
+          <div className="space-y-3 p-6">
+            <div className="h-5 w-2/3 animate-pulse rounded-md bg-white/10" />
+            <div className="h-4 w-full animate-pulse rounded-md bg-white/[0.06]" />
+            <div className="h-4 w-5/6 animate-pulse rounded-md bg-white/[0.06]" />
           </div>
         </div>
-      </div>
-    </motion.article>
+      ))}
+    </div>
   );
 }
 
 export default function Projects() {
-  const [selected, setSelected] = useState<Project | null>(null);
+  const [pendingTitle, setPendingTitle] = useState<string | null>(null);
+  const sectionRef = useInViewClass<HTMLDivElement>();
+  const ctaRef = useInViewClass<HTMLDivElement>();
+  const { ref: gridRef, inView: gridInView } = useInViewState<HTMLDivElement>(0.1);
 
+  // Shell-level listener so palette requests arriving before the lazy chunk
+  // loads are held and handed over on mount.
   useEffect(() => {
     const onOpenProject = (e: Event) => {
-      const title = (e as CustomEvent<string>).detail;
-      const found = projects.find((p) => p.title === title);
-      if (found) setSelected(found);
+      setPendingTitle((e as CustomEvent<string>).detail);
     };
     window.addEventListener("open-project", onOpenProject);
     return () => window.removeEventListener("open-project", onOpenProject);
   }, []);
 
-  useEffect(() => {
-    if (!selected) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setSelected(null);
-    };
-    window.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-    };
-  }, [selected]);
+  const consumePending = useCallback(() => setPendingTitle(null), []);
 
   return (
     <section id="projects" className="relative scroll-mt-20 py-24">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="mx-auto max-w-6xl px-6 sm:px-8"
-      >
+      <div ref={sectionRef} className="reveal mx-auto max-w-6xl px-6 sm:px-8">
         <SectionHeading
           eyebrow="Projects"
           title="Featured Projects"
           description="Placeholder projects — swap in your own case studies, repos and live links. Featured cards get extra spotlight."
         />
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
-        >
-          {projects.map((project) => (
-            <ProjectCard key={project.title} project={project} onSelect={setSelected} />
-          ))}
-        </motion.div>
+        <div ref={gridRef}>
+          {gridInView ? (
+            <ProjectShowcase pendingTitle={pendingTitle} onConsumed={consumePending} />
+          ) : (
+            <ProjectGridSkeleton />
+          )}
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5 }}
-          className="mt-10 text-center"
-        >
+        <div ref={ctaRef} className="reveal mt-10 text-center">
           <a
             href="https://github.com"
             target="_blank"
@@ -260,84 +80,8 @@ export default function Projects() {
             See more on GitHub
             <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
-        </motion.div>
-      </motion.div>
-
-      {/* Full-screen modal */}
-      <AnimatePresence>
-        {selected && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={() => setSelected(null)}
-            className="fixed inset-0 z-[70] flex items-center justify-center bg-black/70 p-5 backdrop-blur-sm"
-            role="dialog"
-            aria-modal="true"
-            aria-label={`${selected.title} details`}
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 20, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 12, scale: 0.98 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-8 shadow-[0_1px_0_0_rgba(255,255,255,0.05)_inset]"
-            >
-              <button
-                onClick={() => setSelected(null)}
-                aria-label="Close project details"
-                className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-zinc-400 transition-colors hover:text-white active:scale-95"
-              >
-                <X className="h-4 w-4" />
-              </button>
-
-              <p className="font-mono text-xs uppercase tracking-wider text-zinc-500">
-                {selected.year} {selected.featured ? "· Featured" : ""}
-              </p>
-              <h3 className="mt-2 text-xl font-semibold tracking-tight text-white sm:text-2xl">
-                {selected.title}
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-zinc-400">
-                {selected.description}
-              </p>
-
-              <div className="mt-5 flex flex-wrap gap-1.5">
-                {selected.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-md bg-white/[0.06] px-2 py-1 font-mono text-xs text-zinc-300"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              <div className="mt-6 flex items-center gap-2 border-t border-white/10 pt-6">
-                <a
-                  href={selected.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
-                >
-                  <Github className="h-4 w-4" /> Code
-                </a>
-                {selected.liveUrl ? (
-                  <a
-                    href={selected.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-medium bg-primary text-black hover:bg-primary/90 transition-colors"
-                  >
-                    Live Demo <ArrowUpRight className="h-4 w-4" />
-                  </a>
-                ) : null}
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        </div>
+      </div>
     </section>
   );
 }

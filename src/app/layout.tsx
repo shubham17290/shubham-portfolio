@@ -4,7 +4,6 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BackgroundBlobs from "@/components/BackgroundBlobs";
-import EasterEggs from "@/components/EasterEggs";
 import BackToTop from "@/components/BackToTop";
 import LazyWidgets from "@/components/LazyWidgets";
 
@@ -119,7 +118,6 @@ export default function RootLayout({
         />
         <div className="relative min-h-screen bg-[var(--color-bg)]">
           <BackgroundBlobs />
-          <EasterEggs />
           <Navbar />
           <main className="relative">{children}</main>
           <Footer />

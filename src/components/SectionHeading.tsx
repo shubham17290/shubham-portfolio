@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useInViewClass } from "@/hooks/useInViewClass";
 
 type Props = {
   eyebrow: string;
@@ -16,13 +16,11 @@ export default function SectionHeading({
   align = "center",
 }: Props) {
   const centered = align === "center";
+  const ref = useInViewClass<HTMLDivElement>();
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`max-w-2xl ${centered ? "mx-auto text-center" : "text-left"}`}
+    <div
+      ref={ref}
+      className={`reveal max-w-2xl ${centered ? "mx-auto text-center" : "text-left"}`}
     >
       <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 font-mono text-xs uppercase tracking-wider text-zinc-400">
         <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
@@ -36,6 +34,6 @@ export default function SectionHeading({
           {description}
         </p>
       )}
-    </motion.div>
+    </div>
   );
 }

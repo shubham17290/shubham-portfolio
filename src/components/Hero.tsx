@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { type CSSProperties } from "react";
 import {
   ArrowRight,
   ArrowDown,
@@ -55,14 +55,11 @@ function useTypewriter(words: string[]) {
   return text;
 }
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 16 },
-  show: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: 0.08 * i, duration: 0.4, ease: "easeOut" as const },
-  }),
-};
+// Staggered load-in delays (80ms steps) — matches the old motion stagger.
+const delay = (step: number): CSSProperties =>
+  ({
+    "--reveal-delay": `${step * 80}ms`,
+  }) as CSSProperties;
 
 const TERMINAL_LINES = [
   "$ whoami",
@@ -101,12 +98,9 @@ function TerminalCard() {
       : "";
 
   return (
-      <motion.div
-      variants={fadeUp}
-      initial="hidden"
-      animate="show"
-      custom={2}
-      className="w-full"
+      <div
+      style={delay(2)}
+      className="load-in w-full"
     >
       <div
         className="overflow-hidden rounded-2xl border border-white/10 bg-[#0b0b0e]/95 shadow-[0_0_50px_-12px_rgba(255,255,255,0.2)] backdrop-blur"
@@ -153,7 +147,7 @@ function TerminalCard() {
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -205,12 +199,9 @@ export default function Hero() {
             </p>
           ) : null}
 
-          <motion.h1
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={0}
-            className="mt-4 text-5xl font-bold leading-[1.05] tracking-tight text-balance sm:text-6xl md:text-7xl"
+          <h1
+            style={delay(0)}
+            className="load-in mt-4 text-5xl font-bold leading-[1.05] tracking-tight text-balance sm:text-6xl md:text-7xl"
           >
             <span className="text-gradient">Crafting minimal,</span>
             <br />
@@ -232,14 +223,11 @@ export default function Hero() {
                 />
               </svg>
             </span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={1}
-            className="mt-7 max-w-xl text-base leading-relaxed text-zinc-400"
+          <p
+            style={delay(1)}
+            className="load-in mt-7 max-w-xl text-base leading-relaxed text-zinc-400"
           >
             I&apos;m <span className="font-medium text-zinc-100">{siteConfig.name}</span> —{" "}
             <span className="font-medium text-zinc-100">{typedRole}</span>
@@ -251,14 +239,11 @@ export default function Hero() {
             </span>{" "}
             focused on Next.js, TypeScript and thoughtful design. I help
             startups ship fast without compromising on quality.
-          </motion.p>
+          </p>
 
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={2}
-            className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
+          <div
+            style={delay(2)}
+            className="load-in mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
           >
             <MagneticButton>
               <a
@@ -286,7 +271,7 @@ export default function Hero() {
                 Resume
               </a>
             </MagneticButton>
-          </motion.div>
+          </div>
 
           <div
             className="mt-10 flex items-center gap-3"
