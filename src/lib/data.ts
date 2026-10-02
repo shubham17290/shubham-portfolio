@@ -4,14 +4,16 @@ import { Code2, Server, Wrench, type LucideIcon } from "lucide-react";
 export const siteConfig = {
   name: "Shubham Maurya",
   role: "Full-Stack Developer",
-  tagline: "I build minimal, premium web experiences.",
+  tagline: "I design and build fast, AI-powered web experiences.",
   description:
     "Full-stack developer working with Next.js, React, TypeScript, Tailwind CSS, and Node.js. AI intern at IBM. Currently pursuing B.Tech CSE and open to internship opportunities.",
   location: "Kanpur, India",
   locationsOpen: ["Kanpur", "Delhi", "Lucknow", "Noida", "Mumbai", "Gurgaon"],
   email: "smourya1046@gmail.com",
   availability: "Open to Internships",
-  resumeUrl: "/resume.pdf"
+  resumeUrl: "/resume.pdf",
+  currently:
+    "🔨 Building PREPForge v2 · 📖 Learning RAG pipelines & AI agents · 📍 Kanpur, India"
 };
 
 /* ── Nav ──────────────────────────────────────────── */
@@ -137,10 +139,9 @@ export type Project = {
 export const projects: Project[] = [
   {
     title: "PREPForge",
-    // TODO: 2-3 lines mein likh — kya banaya, kis problem ko solve karta hai
     description:
-      "An interview preparation platform designed to help students practice DSA and core CS concepts with structured tracks and progress tracking.",
-    tags: ["Next.js", "TypeScript", "Tailwind", "MongoDB"],
+      "PREPForge is an intelligent PYQ practice platform for GATE CS & IT aspirants — with subject-wise, topic-wise, and year-wise question banks, timed mock tests, MCQ/MSQ/NAT support, and performance analytics. Built with Next.js, TypeScript, Node.js, PostgreSQL, and Prisma.",
+    tags: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "Prisma", "Tailwind CSS"],
     // TODO: apna real repo URL daal
     githubUrl: "https://github.com/shubham17290",
     // TODO: agar deploy kiya hai toh URL daal, warna khali chhod de
@@ -149,11 +150,10 @@ export const projects: Project[] = [
     year: "2025"
   },
   {
-    title: "Fitness Application",
-    // TODO: 2-3 lines mein likh — features kya hain
+    title: "AI Fitness Coach",
     description:
-      "A fitness tracking web app to log workouts, monitor daily activity, and visualize progress over time with an intuitive dashboard.",
-    tags: ["React", "Node.js", "Express", "MongoDB"],
+      "An AI-powered fitness and sports guidance app that delivers personalized workout plans, real-time exercise tracking, and health improvement insights. Features goal-based fitness planning, workout analytics, and AI-based assistance. Built with Next.js, TypeScript, Tailwind CSS, and shadcn/ui.",
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "shadcn/ui", "AI"],
     githubUrl: "https://github.com/shubham17290",
     liveUrl: "",
     featured: true,
@@ -163,8 +163,9 @@ export const projects: Project[] = [
 
 /* ── About ────────────────────────────────────────── */
 export const aboutParagraphs = [
-  "I'm Shubham Maurya — a full-stack developer and final-year B.Tech CSE student at AKTU. I work with Next.js, React, TypeScript, Tailwind CSS, and Node.js, focused on building minimal, premium, modern web experiences.",
-  "I recently completed an AI internship at IBM, where I worked on real-world AI-driven development tasks. I enjoy solving DSA problems on LeetCode and continuously sharpening my craft."
+  "I'm Shubham — a full-stack developer and final-year B.Tech CSE student at AKTU. I specialize in building AI-powered web applications with Next.js, TypeScript, and modern LLM APIs.",
+  "Recently, I completed an AI internship at IBM where I worked on real-world AI development tasks — from prompt engineering to building production features. I love turning complex ideas into simple, beautiful user experiences.",
+  "When I'm not coding, I'm training my mind for grit — whether through chess, endurance workouts, or deep-focus reading."
 ];
 
 export type Experience = {

@@ -192,6 +192,16 @@ export default function Hero() {
             </p>
           </motion.div>
 
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="mt-3 inline-flex max-w-full items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-white/60 sm:text-sm"
+          >
+            <span className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-emerald-400" />
+            <span>{siteConfig.currently}</span>
+          </motion.div>
+
           {siteConfig.location ? (
             <motion.p
               variants={fadeUp}
